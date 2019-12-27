@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Microsoft.VisualBasic;
-
+using System.Reflection;
+using System.Diagnostics;  
+using System.Runtime.InteropServices; 
 
 
 using System.Data;
@@ -19,7 +21,7 @@ namespace bio2_rndx
 
 
         public LIB_RDT RDT_FUNCTIONS = new LIB_RDT();
-
+        
 
         public LIB_RDT.RDT_OBJ[] RDT_DATA = new LIB_RDT.RDT_OBJ[0]; // resize to count of rdt files        
         public LIB_RDT.ITEM_DATA_OBJ[] ALL_ITEM_AOT = new LIB_RDT.ITEM_DATA_OBJ[0]; // resize to amount of items found in rdt file?
@@ -30,13 +32,12 @@ namespace bio2_rndx
         public LIB_RDT.MD1_MODEL_OBJ[] MD1_MODEL = new LIB_RDT.MD1_MODEL_OBJ[0];
         public LIB_RDT.CK_DATA_OBJ[] CK_TEST = new LIB_RDT.CK_DATA_OBJ[0];
 
+        public LIB_EMD.EMD_OUT_OBJ[] EMD_OUT = new LIB_EMD.EMD_OUT_OBJ[0]; // resize 2 num of rdts , NOT # of rdt relative enemies
+
 
         public static Program prg = new Program();
         public static LIB_RDT.RDT_HEADER_OBJ RDT_HEADER = new LIB_RDT.RDT_HEADER_OBJ();
-
-        public static LIB_RDT.SEED_HEADER_OBJ SEED_HEADER = new LIB_RDT.SEED_HEADER_OBJ();
-        public static LIB_RDT.SEED_ENTRY_OBJ[] SEED_ENTRIES = new LIB_RDT.SEED_ENTRY_OBJ[0]; // resize later
-        public static LIB_RDT.SEED_ENT_OBJ[] SEED_ENTRYS = new LIB_RDT.SEED_ENT_OBJ[0];
+        
 
         public string Dir_Path = string.Empty;
         public string Config_Path = string.Empty;
@@ -57,8 +58,8 @@ namespace bio2_rndx
         public List<int> GLOBAL_ITEM_OFFS = new List<int>();
         public List<int> RDT_ITEM_TOTAL = new List<int>();
 
-       public List<int> ItemBoxRoomList = new List<int> { 15, 31,38,68,69,73,89,103,133};
-        public List<string> LogOut = new List<string>();
+       public List<int> ItemBoxRoomList = new List<int> {15,31,38,68,69,73,89,103,133};
+       public List<string> LogOut = new List<string>();
 
 
 
@@ -104,6 +105,18 @@ namespace bio2_rndx
         public static byte HANDGUN_MODE = 0; // disable /enable hg on loadout..
 
 
+
+        [DllImport("kernel32.dll", ExactSpelling = true)]
+        private static extern IntPtr GetConsoleWindow();
+        private static IntPtr ThisConsole = GetConsoleWindow();
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        private const int HIDE = 0;
+        private const int MAXIMIZE = 3;
+        private const int MINIMIZE = 6;
+        private const int RESTORE = 9;
+
+
         public enum ItemClass
         {
               BLUECARD,
@@ -113,10 +126,6 @@ namespace bio2_rndx
               LAB_KEYS
               
         }
-
-        
-
-
 
         int spade_dxt = 0;
         int heart_dxt = 0;
@@ -155,8 +164,7 @@ namespace bio2_rndx
         // includes rpd locations
         // public int[] SewerKeyList = new int[] {88,89,90,91,92,93,94,95,96,97,98,99,100};
 
-
-
+            
         //  public int[] SuitKeyList = new int[] { 6, 7, 8, 9, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 32, 33, 41, 42, 43, 44, 45, 46, 47, 50, 51, 52, 53, 54, 55 };
 
         //   public List<int> SuitKeyList = new List<int>() {13,17,43,51};
@@ -203,22 +211,21 @@ namespace bio2_rndx
 
 
 
-        // *********************************************************************************************** //
-        //    BIO2_RNDX DCHAPS 2018, 
-        //    ARGS[0] = -l || -c (leon claire)
-        //    ARGS[1] = -em_on || -em_off (enemy shuffle)
-        //    args[2] = -gs_on || -gs_off (game type shuffle, A/B/Hunk/Tofu)
-        //    args[3] = pz_on ||  -pz_off (puzzle scramlbing on off) (safe,torch,final timer, etc)
-        // *********************************************************************************************** //
+    
 
         public static void Main(string[] args)
         {
+
+
+            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+            ShowWindow(ThisConsole, MAXIMIZE);
+
+
             Console.BufferHeight = 32000;
 
             prg.Banner();
 
 
-            
 
             if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\Config.INI"))
             {
@@ -243,15 +250,13 @@ namespace bio2_rndx
             }
 
 
-
+            // if we get args
             if (args != null)
             {
+                 // if there is 1 arg
                 if (args.Length == 1)
                 {
 
-
-
-                    
                     // leon argument // common/key shuffle
                     if (args[0] == "/l" || args[0] == "/L")
                     {
@@ -292,9 +297,10 @@ namespace bio2_rndx
                         Array.Resize(ref prg.SCD_SUB_OFFS, rdt_files.Length);
                         Array.Resize(ref prg.SCD_EOF, rdt_files.Length);
                         Array.Resize(ref prg.RDT_DATA, rdt_files.Length);
+                        Array.Resize(ref prg.EMD_OUT, rdt_files.Length);
               
-                        Array.Resize(ref SEED_ENTRIES, rdt_files.Length);
-                        Array.Resize(ref SEED_ENTRYS, 158);
+                   //     Array.Resize(ref SEED_ENTRIES, rdt_files.Length);
+                  //      Array.Resize(ref SEED_ENTRYS, 158);
 
                         Console.ForegroundColor = ConsoleColor.Green;
 
@@ -328,7 +334,7 @@ namespace bio2_rndx
 
                         }
 
-
+                        
 
                         //Console.WriteLine("Total Items Scanned: " + prg.t_Items);
                         //Console.WriteLine("Total Common Items Scanned: " + prg.t_Cmn);
@@ -340,27 +346,29 @@ namespace bio2_rndx
                         prg.ITEM_SHUFFLE(args,prg.AllItems, prg.Shuffled_Items);
 
                         
-                        Console.ForegroundColor = ConsoleColor.White;
-                        
-                        Console.WriteLine(Figgle.FiggleFonts.CyberMedium.Render("\n\n\n SEED LOG"));
-
                       
+
+                      // prompt item list control options.....
                         LIB_RDT.Prompt_Swap(prg.Shuffled_Items);
 
-                        Console.WriteLine("\n");
+                        Console.WriteLine("\n\n");
 
 
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n[-----------------------------------------------------------------------------------------------]");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(Figgle.FiggleFonts.Speed.Render("ITEM OUTPUT"));
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("[-----------------------------------------------------------------------------------------------]");
 
-                      
+
 
                         // loop all files
                         for (int x = 0; x < rdt_files.Length; x++)
                         {
                            
-                            BIO2_LIB_RND.Shuffle_CK(rdt_files[x], x, prg.RDT_DATA[x].Item_Aot_Count, ref t_count, prg.RDT_DATA, prg.Shuffled_Items, SEED_ENTRYS, prg.LogOut);
+                            BIO2_LIB_RND.Shuffle_CK(rdt_files[x], x, prg.RDT_DATA[x].Item_Aot_Count, ref t_count, prg.RDT_DATA, prg.Shuffled_Items, prg.LogOut);
                             
-
-
                             /// ENABLE PUZZLES
                             if (PUZZLE_MODE == 1)
                             {
@@ -391,13 +399,8 @@ namespace bio2_rndx
 
                             }
 
-
                             if (ENEMY_MODE == 1)
                             {
-
-                                
-
-
                                 switch (x)
                                 {
 
@@ -442,8 +445,8 @@ namespace bio2_rndx
                                     case 120: // END A/B HALL ;) 
 
 
-
-                                        BIO2_LIB_RND.EMD_SWAP(rdt_files[x], x, prg.RDT_DATA[x].EMD_COUNT, ref t_em_count, prg.RDT_DATA);
+                                        
+                                       BIO2_LIB_RND.EMD_SWAP(rdt_files[x], x, prg.RDT_DATA[x].EMD_COUNT, ref t_em_count, prg.RDT_DATA, prg.EMD_OUT);
 
                                         break;
 
@@ -526,7 +529,7 @@ namespace bio2_rndx
                             
                         }
 
-                        SEED_HEADER.Item_Count = (Int16)t_count;
+                        //SEED_HEADER.Item_Count = (Int16)t_count;
 
                         // patch that ada throw between rooms shit
                         for (int j = 0; j < rdt_files.Length; j++)
@@ -539,54 +542,90 @@ namespace bio2_rndx
                         }
 
 
-                        if (HANDGUN_MODE == 1)
+                        try
                         {
 
-                            using (FileStream fs = new FileStream(prg.Dir_Path + "\\bio2.exe", FileMode.Open))
+                            if (HANDGUN_MODE == 1)
                             {
-                                using (BinaryWriter bw = new BinaryWriter(fs))
+
+                                using (FileStream fs = new FileStream(prg.Dir_Path + "\\bio2.exe", FileMode.Open))
                                 {
+                                    using (BinaryWriter bw = new BinaryWriter(fs))
+                                    {
 
-                                    Int16 nullz = 0x00;
+                                        Int16 nullz = 0x00;
 
-                                    fs.Seek(1311072, SeekOrigin.Begin);
-                                    bw.Write(nullz);
+                                        fs.Seek(1311072, SeekOrigin.Begin);
+                                        bw.Write(nullz);
 
 
+                                    }
                                 }
+
+                            }
+
+
+                            else
+                            {
+                                using (FileStream fs = new FileStream(prg.Dir_Path + "\\bio2.exe", FileMode.Open))
+                                {
+                                    using (BinaryWriter bw = new BinaryWriter(fs))
+                                    {
+
+                                        byte hg_id = 0x02;
+                                        byte quan = 0x12;
+
+                                        fs.Seek(1311072, SeekOrigin.Begin);
+                                        bw.Write(hg_id);
+                                        bw.Write(quan);
+
+
+                                    }
+                                }
+
+                            }
+
+                        }
+                        catch (System.IO.IOException ex) {
+
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nWARNING!");
+                            Console.WriteLine("Game Process is already running.. Close it first if you want handgun disabled on startup\n\n");
+                        }
+
+
+
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n[-----------------------------------------------------------------------------------------------]");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(Figgle.FiggleFonts.Speed.Render("EMD OUTPUT"));
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("[-----------------------------------------------------------------------------------------------]");
+
+
+
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        /// dump enemy log output...
+                        for (int i = 0; i < prg.EMD_OUT.Length; i++)
+                        {
+                            try
+                            {
+                                // try and filter out blank rooms
+                                if (prg.EMD_OUT[i].roomname.Length > 0)
+                                {
+                                    Console.WriteLine(prg.EMD_OUT[i].enemy_name + " SET IN " + prg.EMD_OUT[i].roomname);
+                                }
+
+                            }
+
+                            catch (NullReferenceException NRE)
+                            {
+
                             }
 
                         }
 
-
-                        else
-                        {
-                            using (FileStream fs = new FileStream(prg.Dir_Path + "\\bio2.exe", FileMode.Open))
-                            {
-                                using (BinaryWriter bw = new BinaryWriter(fs))
-                                {
-
-                                    byte hg_id = 0x02;
-                                    byte quan = 0x12;
-
-                                    fs.Seek(1311072, SeekOrigin.Begin);
-                                    bw.Write(hg_id);
-                                    bw.Write(quan);
-
-
-                                }
-                            }
-
-
-
-
-
-                        }
-
-
-
-
-
+                        Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("Dump Seed Log to App Directory?? Y or N \n\n");
 
                         ConsoleKeyInfo WriteKey = Console.ReadKey();
@@ -595,10 +634,6 @@ namespace bio2_rndx
                             CmdParse.SeedLog(prg.LogOut);
                         }
                         
-
-                        
-                       
-
                         //  var tbl = ConsoleTableBuilder.From(table);
 
                         //   tbl.WithFormat(ConsoleTableBuilderFormat.Alternative).ExportAndWriteLine();
@@ -618,8 +653,25 @@ namespace bio2_rndx
 
                         prg.Banner();
 
-                        Console.ReadKey();
-                        return;
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("Press Q a few times to exit.....\n");
+                        ConsoleKeyInfo opt = Console.ReadKey();
+
+                        if (opt.Key != ConsoleKey.Q)
+                        {
+                            Console.WriteLine("Press q to exit");
+                        }
+                        else {
+                            Environment.Exit(0);
+                        }
+                        
+
+           
+
+                       
+
+
+                      
                         
                     }
 
@@ -718,11 +770,6 @@ namespace bio2_rndx
 
 
 
-                        Console.ForegroundColor = ConsoleColor.White;
-
-                        Console.WriteLine(Figgle.FiggleFonts.CyberMedium.Render("\n\n\n SEED LOG"));
-
-
 
 
                       //  LIB_RDT.Prompt_Swap(prg.Shuffled_Items);
@@ -733,7 +780,7 @@ namespace bio2_rndx
                         {
                             //Console.WriteLine(rdt_files[x]);
 
-                            BIO2_LIB_RND.Shuffle_CK_Claire(rdt_files[x], x, prg.RDT_DATA[x].Item_Aot_Count, ref t_count, prg.RDT_DATA, prg.Shuffled_Items, SEED_ENTRYS);
+                            BIO2_LIB_RND.Shuffle_CK_Claire(rdt_files[x], x, prg.RDT_DATA[x].Item_Aot_Count, ref t_count, prg.RDT_DATA, prg.Shuffled_Items);
 
 
                          //   if (x == 12) { BIO2_LIB_RND.Statue_Shuffle(rdt_files[x]); }
@@ -793,7 +840,7 @@ namespace bio2_rndx
 
 
 
-                                    BIO2_LIB_RND.EMD_SWAP(rdt_files[x], x, prg.RDT_DATA[x].EMD_COUNT, ref t_em_count, prg.RDT_DATA);
+                              //      BIO2_LIB_RND.EMD_SWAP(rdt_files[x], x, prg.RDT_DATA[x].EMD_COUNT, ref t_em_count, prg.RDT_DATA);
 
                                     break;
 
@@ -901,13 +948,9 @@ namespace bio2_rndx
 
 
                   
-
-
                     // repair dirs
-                    if (args[0] == "-repair")
+                    if (args[0] == "/r" || args[0] == "/R")
                     {
-
-
                         if (!Directory.Exists(prg.Dir_Path + "\\bk_rdt_L"))
                         {
 
@@ -976,7 +1019,7 @@ namespace bio2_rndx
                 }
                 else
                 {
-                    prg.Help();
+                    prg.Banner();
                    
                 }
 
@@ -984,7 +1027,7 @@ namespace bio2_rndx
             else
             {
 
-                prg.Help();
+                prg.Banner();
 
             }
 
@@ -1037,7 +1080,7 @@ namespace bio2_rndx
                 {
                     // if LEON COOMON/KEY MIX
 
-                    if (args[0] == "/L" || args[0] == "/L")
+                    if (args[0] == "/L" || args[0] == "/l")
                     {
                         // if LEON KEY oR LEON ITEM... FILTER IS STILL NESSECARILY REGARDLESS OF USING LEON COMMON LISTS BECAUSE HG BULLETS ARE SHARED BETWEEN LEON\CLAIRE!!!
 
@@ -1187,8 +1230,12 @@ namespace bio2_rndx
 
 
 
+
+            /// for all blue key positions
                 for (int i = 0; i < BlueKeyList.Count; i++)
                 {
+                  
+                     // if the item list
                     if (LIB_ITEM.BIO2_KEY_LUT_LA.ContainsKey(Return_Shuffle[i].item) || LIB_ITEM.BIO2_KEY_LUT_CA.ContainsKey(Return_Shuffle[i].item))
                     {
                        // Console.WriteLine("removing[" + i + "] - " + LIB_ITEM.BIO2_KEY_LUT_LA[Return_Shuffle[i].item]);
@@ -2191,20 +2238,11 @@ namespace bio2_rndx
 
                                         //}
 
-
-
-
-
-
-
-
                                     }
 
 
 
                                     
-
-
                                     // MR X FILTER.... 00
                                     if (TEMP_CK.bit_array == 0x06 && TEMP_CK.num == 0xC7 && scd_buffer[x - 4] == 0x06)
                                     {
@@ -2255,7 +2293,7 @@ namespace bio2_rndx
                                             x = else_loc + els_blk_len;
 
                                         }
-
+                                        
 
 
                                         if (TEMP_CK.val == 1)
@@ -2268,12 +2306,9 @@ namespace bio2_rndx
 
                                             x = else_loc + els_blk_len;
 
-
                                         }
 
-
                                     }
-
 
                                     // skip ingram in lab
                                     if (TEMP_CK.bit_array == 0x08 && TEMP_CK.num == 0x3E && scd_buffer[x - 4] == 0x06)
@@ -2285,8 +2320,6 @@ namespace bio2_rndx
                                         x = else_loc;
 
                                     }
-
-
 
                                 }
 
@@ -2319,10 +2352,6 @@ namespace bio2_rndx
                         }
 
 
-
-
-
-
                         // item check , store offsets
 
                         // detect and store op offsets and t_counts
@@ -2346,8 +2375,6 @@ namespace bio2_rndx
 
 
                     } // end of scd_buffer loop
-
-
 
 
 
@@ -2431,6 +2458,7 @@ namespace bio2_rndx
                         //   RDT_AOT_OFFS[index].offsets[z] = int.Parse(fs.Position.ToString());
 
                         RDT_FUNCTIONS.Read_Item_Aots(fs, br, z, RDT_DATA[index].ITEM_AOTS, AllItems, DEBUG_MODE);
+                        
 
                     }
 
@@ -2545,39 +2573,96 @@ namespace bio2_rndx
         public void Banner()
         {
 
-            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Assembly execAssembly = Assembly.GetCallingAssembly();
 
-            Console.WriteLine(Figgle.FiggleFonts.Ivrit.Render("BIO2 RNDX\t v0.50"));
-            Console.WriteLine("##############################################\n---------------------------------------------");
+            AssemblyName name = execAssembly.GetName();
 
 
+          
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("Author");
-            Console.WriteLine(Figgle.FiggleFonts.CyberSmall.Render("DCHAPS")); Console.Write("--------------------------------2018/\n");
+            Console.Write(Figgle.FiggleFonts.PoisonSmall.Render("BIO2 RNDX v" + name.Version.Major + "." + name.Version.Minor));
 
-            
+          
+
+
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n[======================================================================================================================]");
+
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("                         __    _                                   ");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("                    _wr\"\"        \" - q__");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("                 _dP                 9m_     ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("               _#P                     9#_                         ");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("              d#@                       9#m                        ");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("             d##                         ###                       ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("            J###                         ###L                      ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("            {###K                       J###K                      ");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("            ]####K      ___aaa___      J####F                      ");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("        __gmM######_  w#P\"\"   \"\"9#m  _d#####Mmw__                  ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("     _g##############mZ_         __g##############m_               ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("   _d####M@PPPP@@M#######Mmp gm#########@@PPP9@M####m_             ");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("  a###\"\"          ,Z\"#####@\" '######\"\\g          \"\"M##m            ");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine(" J#@\"             0L  \"*##     ##@\"  J#              *#K           ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" #\"               `#    \"_gmwgm_~    dF               `#_          ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("7F                 \"#_   ]#####F   _dK                 JE          ");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("]                    *m__ ##### __g@\"                   F");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("                       \"PJ#####LP\"                                 ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" `                       0######_                      '           ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("                       _0########_                                   ");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("     .               _d#####^#####m__              ,              ");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("      \" * w_________am#####P\"   ~9#####mw_________w*\"                  ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("          \"\"9@#####@M\"\"           \"\"P@#####@M\"\"                    ");
+            Console.ForegroundColor = ConsoleColor.White;
+
+
+
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("\n by");
+            Console.WriteLine(Figgle.FiggleFonts.Speed.Render("DCHAPS"));
+
+          
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\nARGS: /L [leon]   /C [claire]  /R [repair game dir]");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n[======================================================================================================================]");
+
+
+
+
+
+
+
+
+
+
+
 
         }
 
-        public void Help()
-        {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            
-            Console.Write("========================================================================================================================\n");
-            Console.Write("BIO2 RNDX Version: 0.51 \t2018-2019, Dchaps\n\n");
-            Console.Write("=======================================================================================================================\n\n");
-            Console.Write("ARGS[0] = -l or -c (leon or claire)\n                                                                                     " );      
-            Console.Write("=======================================================================================================================\n\n");
-            Console.Write("=======================================================================================================================\n\n");
 
-
-            Console.ReadKey();
-
-            return;
-
-            
-
-        }
 
     }
 

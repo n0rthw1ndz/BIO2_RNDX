@@ -270,7 +270,7 @@ namespace bio2_rndx
             LAB_KEYS
 
         }
-        
+
         public struct BOX_POS_OBJ
         {
 
@@ -299,10 +299,10 @@ namespace bio2_rndx
             public Int16 statue_2Z;
             public Int16 statue_2R;
 
-            
+
         }
 
-        
+
 
         // return number of total common items
         public int Return_Total_Common(ITEM_DATA_OBJ[] ITEM_AOT)
@@ -518,14 +518,14 @@ namespace bio2_rndx
 
             Random R_Swap = new Random();
 
-            int[] DiamondErrors = new int[] { 51, 52, 34, 35, 36, 61, 63, 64, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,100, 101, 102, 104, 107, 108, 109, 110, 111, 112, 113, 114, 115, 120, 121, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134 };
-            int[] SpadeErrors = new int[] { 38, 39, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100,101, 102, 104, 107, 108, 109, 110, 111, 112, 113, 114, 115, 120, 121, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134 };
-            int[] ClubErrors = new int[] { 67, 68, 59, 60, 69,75, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,100, 101, 102,103, 104, 107, 108, 109, 110, 111, 112, 113, 114, 115, 120, 121, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134 };
+            int[] DiamondErrors = new int[] { 51, 52, 34, 35, 36, 61, 63, 64, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 104, 107, 108, 109, 110, 111, 112, 113, 114, 115, 120, 121, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134 };
+            int[] SpadeErrors = new int[] { 38, 39, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 104, 107, 108, 109, 110, 111, 112, 113, 114, 115, 120, 121, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134 };
+            int[] ClubErrors = new int[] { 67, 68, 59, 60, 69, 75, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 107, 108, 109, 110, 111, 112, 113, 114, 115, 120, 121, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134 };
             int[] HeartErrors = new int[] { 65, 66, 75, 76, 71, 72, 73, 74, 77, 78, 79, 80, 81, 82 };
-            int[] ValveErrors = new int[] { 10, 11, 12, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100,101, 102,103, 104, 107, 108, 109, 110, 111, 112, 113, 114, 115, 120, 121, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134 };
-            int[] RedCardErrors = new int[] { 71, 72, 73, 74, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100,101, 103,102, 104, 107, 108, 109, 110, 111, 112, 113, 114, 115, 120, 121, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134 };
+            int[] ValveErrors = new int[] { 10, 11, 12, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 107, 108, 109, 110, 111, 112, 113, 114, 115, 120, 121, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134 };
+            int[] RedCardErrors = new int[] { 71, 72, 73, 74, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 103, 102, 104, 107, 108, 109, 110, 111, 112, 113, 114, 115, 120, 121, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134 };
 
-            int[] SmallKeyErrors = new int[] { 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,100, 101, 102, 103,104, 107, 108, 109, 110, 111, 112, 113, 114, 115, 120, 121, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134 };
+            int[] SmallKeyErrors = new int[] { 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 107, 108, 109, 110, 111, 112, 113, 114, 115, 120, 121, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134 };
 
             int[] MainFuseErrors = new int[] { 126, 127, 132, 133, 134, 136, 138 };
 
@@ -537,7 +537,7 @@ namespace bio2_rndx
 
 
 
-            int[] UmbrellaCardErrors = new int[] { 127,128,129};
+            int[] UmbrellaCardErrors = new int[] { 127, 128, 129 };
 
 
             int voidRoll = 0;
@@ -1209,11 +1209,16 @@ namespace bio2_rndx
         public static void Prompt_Swap(List<LIB_RDT.ITEM_DATA_OBJ> Return_Shuffle)
         {
 
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine("\n\n -------------------ITEM LIST CONTROL OPTIONS ----------------------\n");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\n\n [-------------------[ITEM LIST CONTROL OPTIONS]----------------------]\n");
             Console.WriteLine("1) Swap X Over Ink Ribbons");
             Console.WriteLine("2) Swap X Over First Aid Sprays");
-            Console.WriteLine("3) Swap X Over all instances of X");
+            Console.WriteLine("3) Rebecca Photo Over All Green Herbs");
+            Console.WriteLine("4) Rebecca Photo Over All Ink Ribbons");
+            Console.WriteLine("5) Random Ammo Over All Heals");
+            Console.WriteLine("6) Knife over all Weapons, Herbs over all Ammo");
+            Console.WriteLine("7) Swap X Over all instances of X");
+            ;
             Console.WriteLine("\n PRESS ANY OTHER KEY TO SKIP");
 
 
@@ -1313,414 +1318,469 @@ namespace bio2_rndx
             }
 
 
+
             if (opt.Key == ConsoleKey.D3)
             {
 
                 Console.WriteLine("OPTION 3");
-                foreach (KeyValuePair<byte, string> ItemEntry in LIB_ITEM.BIO2_ITEM_LUT)
-                {
-                    Console.WriteLine(ItemEntry.Key + "] " + ItemEntry.Value);
-                }
+
+
 
 
                 Console.ForegroundColor = ConsoleColor.Green;
 
-                Console.WriteLine("Choose Item to Overwrite (All occurences)\n");
 
-                string Iselect00 = Console.ReadLine();
-
-                Console.WriteLine(LIB_ITEM.BIO2_ITEM_LUT[byte.Parse(Iselect00)] + "Selected");
-
-                Console.WriteLine(" Select Replacement Item\n");
-
-                string Iselect01 = Console.ReadLine();
-
-                Console.WriteLine(LIB_ITEM.BIO2_ITEM_LUT[byte.Parse(Iselect01)] + "Selected ");
 
                 LIB_RDT.ITEM_DATA_OBJ newItem = new LIB_RDT.ITEM_DATA_OBJ();
 
+                newItem.item = 0x7B;
+                newItem.amount = 0x01;
+
+                for (int i = 0; i < Return_Shuffle.Count; i++)
+                {
+                    if (Return_Shuffle[i].item == 0x26)
+                    {
+                        Return_Shuffle[i] = newItem;
+                    }
+                }
+
+                Console.WriteLine("ALL GREENS HAVE BEEN SWAPPED WITH REBECCA PHOTO\n");
+            }
 
 
-                Console.WriteLine("Set Replacement Item Quantity \n");
-                string SelQuan = Console.ReadLine();
+            if (opt.Key == ConsoleKey.D4)
+            {
+
+                Console.WriteLine("OPTION 4");
+                Console.ForegroundColor = ConsoleColor.Green;
+
+                LIB_RDT.ITEM_DATA_OBJ newItem = new LIB_RDT.ITEM_DATA_OBJ();
+
+                newItem.item = 0x7B;
+                newItem.amount = 0x01;
+
+                for (int i = 0; i < Return_Shuffle.Count; i++)
+                {
+                    if (Return_Shuffle[i].item == 0x1E)
+                    {
+                        Return_Shuffle[i] = newItem;
+                    }
+                }
+
+                Console.WriteLine("ALL GREENS HAVE BEEN SWAPPED WITH REBECCA PHOTO\n");
+            }
+
+            if (opt.Key == ConsoleKey.D5)
+            {
+
+                Console.WriteLine("OPTION 5");
+                Console.ForegroundColor = ConsoleColor.Green;
+
+                LIB_RDT.ITEM_DATA_OBJ newItem = new LIB_RDT.ITEM_DATA_OBJ();
+
+                Random r = new Random();
 
 
-                newItem.item = byte.Parse(Iselect01);
-                newItem.amount = byte.Parse(SelQuan);
+
+                newItem.item = (byte)r.Next(20, 23);
+
+                Console.WriteLine("Random Ammo is : " + LIB_ITEM.BIO2_ITEM_LUT[newItem.item]);
+                newItem.amount = (byte)r.Next(0, 100);
+
+                for (int i = 0; i < Return_Shuffle.Count; i++)
+                {
+                    if (Return_Shuffle[i].item == 0x23 || Return_Shuffle[i].item == 0x26 || Return_Shuffle[i].item == 0x27 || Return_Shuffle[i].item == 0x28 || Return_Shuffle[i].item == 0x29 ||
+                        Return_Shuffle[i].item == 0x2A || Return_Shuffle[i].item == 0x2B || Return_Shuffle[i].item == 0x2C || Return_Shuffle[i].item == 0x2D || Return_Shuffle[i].item == 0x2E)
+                    {
+                        Return_Shuffle[i] = newItem;
+                    }
+                }
+
+                Console.WriteLine("ALL HEALS HAVE BEEN SWAPPED WITH: " + LIB_ITEM.BIO2_ITEM_LUT[newItem.item]);
+            }
+
+            if (opt.Key == ConsoleKey.D6)
+            {
+
+                Console.WriteLine("OPTION 6");
+                Console.ForegroundColor = ConsoleColor.Green;
+
+                LIB_RDT.ITEM_DATA_OBJ newItem = new LIB_RDT.ITEM_DATA_OBJ();
+                LIB_RDT.ITEM_DATA_OBJ rHerb = new LIB_RDT.ITEM_DATA_OBJ();
+
+                Random r = new Random();
+
+
+                newItem.item = 0x01;
+                newItem.amount = 0x01;
+
+
 
 
                 for (int i = 0; i < Return_Shuffle.Count; i++)
                 {
-                    if (Return_Shuffle[i].item == byte.Parse(Iselect00))
+                    if (Return_Shuffle[i].item == 0x02 || Return_Shuffle[i].item == 0x03 || Return_Shuffle[i].item == 0x04 || Return_Shuffle[i].item == 0x05 || Return_Shuffle[i].item == 0x06 ||
+                        Return_Shuffle[i].item == 0x07 || Return_Shuffle[i].item == 0x08 || Return_Shuffle[i].item == 0x0F || Return_Shuffle[i].item == 0x10 || Return_Shuffle[i].item == 0x11)
                     {
                         Return_Shuffle[i] = newItem;
+                    }
 
+                    /// write random herbs over leons ammo spawns
+                    if (Return_Shuffle[i].item == 0x14 || Return_Shuffle[i].item == 0x15 || Return_Shuffle[i].item == 0x16)
+                    {
+                        rHerb.item = (byte)r.Next(0x26, 0x29);
+                        rHerb.amount = 0x01;
+
+                        Return_Shuffle[i] = rHerb;
+
+                    }
+
+                    //Console.WriteLine("ALL WEAPONS ARE KNIFE " + LIB_ITEM.BIO2_ITEM_LUT[newItem.item]);
+                }
+
+
+
+
+
+                // x over x
+                if (opt.Key == ConsoleKey.D7)
+                {
+
+                    Console.WriteLine("OPTION 7");
+                    foreach (KeyValuePair<byte, string> ItemEntry in LIB_ITEM.BIO2_ITEM_LUT)
+                    {
+                        Console.WriteLine(ItemEntry.Key + "] " + ItemEntry.Value);
+                    }
+
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+
+                    Console.WriteLine("Choose Item to Overwrite (All occurences)\n");
+
+                    string Iselect00 = Console.ReadLine();
+
+                    Console.WriteLine(LIB_ITEM.BIO2_ITEM_LUT[byte.Parse(Iselect00)] + "Selected");
+
+                    Console.WriteLine(" Select Replacement Item\n");
+
+                    string Iselect01 = Console.ReadLine();
+
+                    Console.WriteLine(LIB_ITEM.BIO2_ITEM_LUT[byte.Parse(Iselect01)] + "Selected ");
+
+                    LIB_RDT.ITEM_DATA_OBJ newItem1 = new LIB_RDT.ITEM_DATA_OBJ();
+
+
+
+                    Console.WriteLine("Set Replacement Item Quantity \n");
+                    string SelQuan = Console.ReadLine();
+
+
+                    newItem1.item = byte.Parse(Iselect01);
+                    newItem1.amount = byte.Parse(SelQuan);
+
+
+                    for (int i = 0; i < Return_Shuffle.Count; i++)
+                    {
+                        if (Return_Shuffle[i].item == byte.Parse(Iselect00))
+                        {
+                            Return_Shuffle[i] = newItem1;
+
+                        }
+                    }
+
+                }
+
+
+            }
+
+
+            }
+
+            // ########################### EXCLUDE LIST ###########################
+         
+            //                        ROOMA0E0.RDT [AV BOMB]
+            //ROOMA110.RDT[AV BOMB]
+            //ROOMB060.RDT [AV BOMB]
+            //ROOMB0D0.RDT [AV BOMB]
+
+            //ROOMB100.RDT[AV BOMB]
+
+            //ROOMC010.RDT[AV BOMB]
+
+
+            //ROOMD090.RDT[ROCKET 10]
+
+            //ROOMF030.RDT[RED HERB x2]
+            //ROOMA060.RDT[RED HERB x2 ?] ?? parking lot?
+
+            /// 
+            /// 
+            /// #####################################################################
+            /// <summary>
+            /// Reads Item Aots using rdt relative count
+            /// you should make clones of these to only store A/B/EX3 or all?
+            /// </summary>
+            /// <param name="bufferx"></param>
+            /// <param name="enforcer"></param>
+
+            public void Read_Item_Aots(FileStream fs, BinaryReader br, int z, ITEM_DATA_OBJ[] ITEM_AOT, List<ITEM_DATA_OBJ> AllItems, byte DEBUG_MODE)
+            {
+                // read struct
+                ITEM_AOT[z].op = br.ReadByte(); //1
+                ITEM_AOT[z].aot = br.ReadByte(); // 2
+                ITEM_AOT[z].id = br.ReadByte(); // 3
+                ITEM_AOT[z].type = br.ReadByte(); // 4
+                ITEM_AOT[z].floor = br.ReadByte(); // 5
+                ITEM_AOT[z].super = br.ReadByte(); // 6
+                ITEM_AOT[z].x = br.ReadInt16(); // 8
+                ITEM_AOT[z].y = br.ReadInt16(); // 10
+                ITEM_AOT[z].w = br.ReadUInt16(); //12
+                ITEM_AOT[z].d = br.ReadUInt16(); // 14
+                ITEM_AOT[z].item = br.ReadByte(); // 16
+                fs.Seek(+1, SeekOrigin.Current);
+                ITEM_AOT[z].amount = br.ReadByte(); //18
+                fs.Seek(+1, SeekOrigin.Current);
+                ITEM_AOT[z].flag = br.ReadInt16(); // 20
+                ITEM_AOT[z].md1 = br.ReadByte(); // 21
+                ITEM_AOT[z].ani = br.ReadByte(); // 22
+                Console.ForegroundColor = ConsoleColor.Green;
+
+                // if cur item id is in table
+                if (LIB_ITEM.BIO2_ITEM_LUT.ContainsKey(ITEM_AOT[z].item))
+                {
+                    if (DEBUG_MODE == 1)
+                    {
+                        Console.WriteLine("Item ID:[0x" + ITEM_AOT[z].item.ToString("X") + "]" + LIB_ITEM.BIO2_ITEM_LUT[ITEM_AOT[z].item] + "\\" + ITEM_AOT[z].amount);
+
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine(" Quantity: " + ITEM_AOT[z].amount + " MD1: " + ITEM_AOT[z].md1);
+                    }
+
+                }
+                else
+                {
+                    if (DEBUG_MODE == 1)
+                    {
+                        Console.WriteLine("**[NOTE] : **" + ITEM_AOT[z].item.ToString("X"));
                     }
                 }
 
+                //Item_Aots.Add(ITEM_AOT[z]); // store all item aots
+                //  bool alreadyExists = AllItems.Any(x => x.item == 0x5c);
+
+                //  if (!alreadyExists && ITEM_AOT[z].item == 0x5C)
+                // {
+                AllItems.Add(ITEM_AOT[z]);
+                // }
+
+
             }
 
-        }
-
-        // ########################### EXCLUDE LIST ###########################
-        ///
-        ///                        ROOMA0E0.RDT [AV BOMB]
-        //ROOMA110.RDT[AV BOMB]
-        //ROOMB060.RDT [AV BOMB]
-        //ROOMB0D0.RDT [AV BOMB]
-
-        //ROOMB100.RDT[AV BOMB]
-
-        //ROOMC010.RDT[AV BOMB]
-
-
-        //ROOMD090.RDT[ROCKET 10]
-
-        //ROOMF030.RDT[RED HERB x2]
-        //ROOMA060.RDT[RED HERB x2 ?] ?? parking lot?
-
-        /// 
-        /// 
-        /// #####################################################################
-        /// <summary>
-        /// Reads Item Aots using rdt relative count
-        /// you should make clones of these to only store A/B/EX3 or all?
-        /// </summary>
-        /// <param name="bufferx"></param>
-        /// <param name="enforcer"></param>
-
-        public void Read_Item_Aots(FileStream fs, BinaryReader br, int z, ITEM_DATA_OBJ[] ITEM_AOT, List<ITEM_DATA_OBJ> AllItems, byte DEBUG_MODE)
-        {
-            // read struct
-            ITEM_AOT[z].op = br.ReadByte(); //1
-            ITEM_AOT[z].aot = br.ReadByte(); // 2
-            ITEM_AOT[z].id = br.ReadByte(); // 3
-            ITEM_AOT[z].type = br.ReadByte(); // 4
-            ITEM_AOT[z].floor = br.ReadByte(); // 5
-            ITEM_AOT[z].super = br.ReadByte(); // 6
-            ITEM_AOT[z].x = br.ReadInt16(); // 8
-            ITEM_AOT[z].y = br.ReadInt16(); // 10
-            ITEM_AOT[z].w = br.ReadUInt16(); //12
-            ITEM_AOT[z].d = br.ReadUInt16(); // 14
-            ITEM_AOT[z].item = br.ReadByte(); // 16
-            fs.Seek(+1, SeekOrigin.Current);
-            ITEM_AOT[z].amount = br.ReadByte(); //18
-            fs.Seek(+1, SeekOrigin.Current);
-            ITEM_AOT[z].flag = br.ReadInt16(); // 20
-            ITEM_AOT[z].md1 = br.ReadByte(); // 21
-            ITEM_AOT[z].ani = br.ReadByte(); // 22
-            Console.ForegroundColor = ConsoleColor.Green;
-
-            // if cur item id is in table
-            if (LIB_ITEM.BIO2_ITEM_LUT.ContainsKey(ITEM_AOT[z].item))
+            public void Read_EM_SETS(FileStream fs, BinaryReader br, int t, EM_SET_OBJ[] EM_SET)
             {
-                if (DEBUG_MODE == 1)
-                {
-                    Console.WriteLine("Item ID:[0x" + ITEM_AOT[z].item.ToString("X") + "]" + LIB_ITEM.BIO2_ITEM_LUT[ITEM_AOT[z].item] + "\\" + ITEM_AOT[z].amount);
 
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine(" Quantity: " + ITEM_AOT[z].amount + " MD1: " + ITEM_AOT[z].md1);
+                EM_SET[t]._opdummy = br.ReadByte();
+                EM_SET[t]._emIndex = br.ReadByte();
+                EM_SET[t]._emdID = br.ReadByte();
+                EM_SET[t]._emPose = br.ReadByte();
+                EM_SET[t]._AnimFlag00 = br.ReadInt16();
+                EM_SET[t]._ushort00 = br.ReadInt16();
+                EM_SET[t]._SND = br.ReadByte();
+                EM_SET[t]._TEX = br.ReadByte();
+                EM_SET[t]._emFlag = br.ReadByte();
+                EM_SET[t]._posx = br.ReadInt16();
+                EM_SET[t]._posz = br.ReadInt16();
+                EM_SET[t]._posy = br.ReadInt16();
+                EM_SET[t]._posr = br.ReadInt16();
+                EM_SET[t]._ushort01 = br.ReadInt16();
+                EM_SET[t]._ushort02 = br.ReadInt16();
+
+            }
+
+
+
+            /// <summary>
+            /// dump seed to binary format
+            /// </summary>
+            /// <param name="file"></param>
+            /// <param name="bw"></param>
+            /// <param name="room_item_count"></param>
+            /// <param name="item_id"></param>
+            /// <param name="quantity"></param>
+            /// <param name="anim"></param>
+            public static void Dump_Seed(SEED_ENT_OBJ[] SEED_ENTRIES, SEED_HEADER_OBJ SEED_HEADER)
+            {
+
+                string seed_dir = AppDomain.CurrentDomain.BaseDirectory + "\\Seeds\\";
+                string output = string.Empty;
+
+
+
+                //  SEED_HEADER.Item_Count = (Int16)total_items;
+                SEED_HEADER.Leon_Claire = 0;
+                SEED_HEADER.E_Shuffle = 0;
+                SEED_HEADER.P_Shuffle = 0;
+                SEED_HEADER.G_Shuffle = 0;
+
+
+                // create dir if not there
+                if (!Directory.Exists(seed_dir))
+                {
+                    Directory.CreateDirectory(seed_dir);
                 }
 
-            }
-            else
-            {
-                if (DEBUG_MODE == 1)
+                // calculate total num of seeds/fil;es
+                int seed_count = Directory.GetFiles(seed_dir).Length;
+
+
+                // generated output
+                output = "BIO2_LA_Seed_" + seed_count;
+
+                // if current genereaqted file output does note xist, open streams, write data
+                if (!File.Exists(seed_dir + output))
                 {
-                    Console.WriteLine("**[NOTE] : **" + ITEM_AOT[z].item.ToString("X"));
-                }
-            }
-
-            //Item_Aots.Add(ITEM_AOT[z]); // store all item aots
-            //  bool alreadyExists = AllItems.Any(x => x.item == 0x5c);
-
-            //  if (!alreadyExists && ITEM_AOT[z].item == 0x5C)
-            // {
-            AllItems.Add(ITEM_AOT[z]);
-            // }
-
-
-        }
-
-        public void Read_EM_SETS(FileStream fs, BinaryReader br, int t, EM_SET_OBJ[] EM_SET)
-        {
-
-            EM_SET[t]._opdummy = br.ReadByte();
-            EM_SET[t]._emIndex = br.ReadByte();
-            EM_SET[t]._emdID = br.ReadByte();
-            EM_SET[t]._emPose = br.ReadByte();
-            EM_SET[t]._AnimFlag00 = br.ReadInt16();
-            EM_SET[t]._ushort00 = br.ReadInt16();
-            EM_SET[t]._SND = br.ReadByte();
-            EM_SET[t]._TEX = br.ReadByte();
-            EM_SET[t]._emFlag = br.ReadByte();
-            EM_SET[t]._posx = br.ReadInt16();
-            EM_SET[t]._posz = br.ReadInt16();
-            EM_SET[t]._posy = br.ReadInt16();
-            EM_SET[t]._posr = br.ReadInt16();
-            EM_SET[t]._ushort01 = br.ReadInt16();
-            EM_SET[t]._ushort02 = br.ReadInt16();
-
-        }
-
-
-
-        /// <summary>
-        /// dump seed to binary format
-        /// </summary>
-        /// <param name="file"></param>
-        /// <param name="bw"></param>
-        /// <param name="room_item_count"></param>
-        /// <param name="item_id"></param>
-        /// <param name="quantity"></param>
-        /// <param name="anim"></param>
-        public static void Dump_Seed(SEED_ENT_OBJ[] SEED_ENTRIES, SEED_HEADER_OBJ SEED_HEADER)
-        {
-
-            string seed_dir = AppDomain.CurrentDomain.BaseDirectory + "\\Seeds\\";
-            string output = string.Empty;
-
-
-
-            //  SEED_HEADER.Item_Count = (Int16)total_items;
-            SEED_HEADER.Leon_Claire = 0;
-            SEED_HEADER.E_Shuffle = 0;
-            SEED_HEADER.P_Shuffle = 0;
-            SEED_HEADER.G_Shuffle = 0;
-
-
-            // create dir if not there
-            if (!Directory.Exists(seed_dir))
-            {
-                Directory.CreateDirectory(seed_dir);
-            }
-
-            // calculate total num of seeds/fil;es
-            int seed_count = Directory.GetFiles(seed_dir).Length;
-
-
-            // generated output
-            output = "BIO2_LA_Seed_" + seed_count;
-
-            // if current genereaqted file output does note xist, open streams, write data
-            if (!File.Exists(seed_dir + output))
-            {
-                using (FileStream fs = new FileStream(seed_dir + output + ".isd", FileMode.Create))
-                {
-                    using (BinaryWriter bw = new BinaryWriter(fs))
+                    using (FileStream fs = new FileStream(seed_dir + output + ".isd", FileMode.Create))
                     {
-                        fs.Seek(0, SeekOrigin.Begin);
-
-                        // write small header
-                        bw.Write(SEED_HEADER.Item_Count);
-                        //bw.Write(SEED_HEADER.Leon_Claire);
-
-                        for (int i = 0; i < SEED_ENTRIES.Length; i++)
+                        using (BinaryWriter bw = new BinaryWriter(fs))
                         {
-                            // Console.WriteLine(SEED_ENTRIES[i].rdt_id);
-                            if (SEED_ENTRIES[i].rdt_id != null)
-                            {
+                            fs.Seek(0, SeekOrigin.Begin);
 
-                                bw.Write(SEED_ENTRIES[i].rdt_id);
-                                //  bw.Write(SEED_ENTRIES[i].count_per_room);
-                                bw.Write(SEED_ENTRIES[i].Offset);
-                                bw.Write(SEED_ENTRIES[i].ITEM.item);
-                                bw.Write(SEED_ENTRIES[i].ITEM.amount);
-                                bw.Write(SEED_ENTRIES[i].ITEM.ani);
+                            // write small header
+                            bw.Write(SEED_HEADER.Item_Count);
+                            //bw.Write(SEED_HEADER.Leon_Claire);
+
+                            for (int i = 0; i < SEED_ENTRIES.Length; i++)
+                            {
+                                // Console.WriteLine(SEED_ENTRIES[i].rdt_id);
+                                if (SEED_ENTRIES[i].rdt_id != null)
+                                {
+
+                                    bw.Write(SEED_ENTRIES[i].rdt_id);
+                                    //  bw.Write(SEED_ENTRIES[i].count_per_room);
+                                    bw.Write(SEED_ENTRIES[i].Offset);
+                                    bw.Write(SEED_ENTRIES[i].ITEM.item);
+                                    bw.Write(SEED_ENTRIES[i].ITEM.amount);
+                                    bw.Write(SEED_ENTRIES[i].ITEM.ani);
+
+                                }
+                                //for (int y = 0; y < SEED_ENTRIES[i].count_per_room; y++)
+                                //{
+                                //    //  Console.WriteLine(SEED_ENTRIES[i].Item[y].item + ":"+ SEED_ENTRIES[i].Item[y].amount);
+
+                                //        bw.Write((byte)y);
+                                //        bw.Write(SEED_ENTRIES[i].Offsets[y]);
+                                //        bw.Write(SEED_ENTRIES[i].Item[y].item);
+                                //        bw.Write(SEED_ENTRIES[i].Item[y].amount);
+                                //        bw.Write(SEED_ENTRIES[i].Item[y].ani);
+
+
+                                //}
 
                             }
-                            //for (int y = 0; y < SEED_ENTRIES[i].count_per_room; y++)
-                            //{
-                            //    //  Console.WriteLine(SEED_ENTRIES[i].Item[y].item + ":"+ SEED_ENTRIES[i].Item[y].amount);
-
-                            //        bw.Write((byte)y);
-                            //        bw.Write(SEED_ENTRIES[i].Offsets[y]);
-                            //        bw.Write(SEED_ENTRIES[i].Item[y].item);
-                            //        bw.Write(SEED_ENTRIES[i].Item[y].amount);
-                            //        bw.Write(SEED_ENTRIES[i].Item[y].ani);
 
 
-                            //}
 
                         }
 
 
 
+
                     }
-
-
 
 
                 }
 
 
+
+
+
+
+
+
             }
 
 
-
-
-
-
-
-
-        }
-
-
-        /// <summary>
-        /// Scans scd buffer using difficulty flags
-        /// </summary>
-        /// <param name="scd_buffer"> The buffer to scan</param>
-        /// <param name="RDT_DATA"> Where the CK OFfsets are stored</param>
-        /// <param name="rdt_index">Current relative file index</param>
-        /// <param name="DFC_FLAG">THe difficulty flag</param>
-        /// <param name="SCD_MAIN_OFF">Array of SCD MAIN OFFS, Just pass relative index</param>
-        public void ARRANGE_FILTER(byte[] scd_buffer, RDT_OBJ[] RDT_DATA, int rdt_index, int[] SCD_MAIN_OFF)
-        {
-
-            LIB_RDT.CK_DATA_OBJ TEMP_CK = new LIB_RDT.CK_DATA_OBJ();
-            int CK_COUNT = 0;
-
-            // if DFC FLAG == 0, easy ..
-            // if DFC FLAG == 1, Normal..
-
-            for (int x = 0; x < scd_buffer.Length; x++)
+            /// <summary>
+            /// Scans scd buffer using difficulty flags
+            /// </summary>
+            /// <param name="scd_buffer"> The buffer to scan</param>
+            /// <param name="RDT_DATA"> Where the CK OFfsets are stored</param>
+            /// <param name="rdt_index">Current relative file index</param>
+            /// <param name="DFC_FLAG">THe difficulty flag</param>
+            /// <param name="SCD_MAIN_OFF">Array of SCD MAIN OFFS, Just pass relative index</param>
+            public void ARRANGE_FILTER(byte[] scd_buffer, RDT_OBJ[] RDT_DATA, int rdt_index, int[] SCD_MAIN_OFF)
             {
-                if (x != scd_buffer.Length)
+
+                LIB_RDT.CK_DATA_OBJ TEMP_CK = new LIB_RDT.CK_DATA_OBJ();
+                int CK_COUNT = 0;
+
+                // if DFC FLAG == 0, easy ..
+                // if DFC FLAG == 1, Normal..
+
+                for (int x = 0; x < scd_buffer.Length; x++)
                 {
-                    // if op ck
-                    if (scd_buffer[x] == 0x21)
+                    if (x != scd_buffer.Length)
                     {
-                        // if op ck confirm
-                        if (scd_buffer[x + 3] == 0x01 || scd_buffer[x + 3] == 0x00)
+                        // if op ck
+                        if (scd_buffer[x] == 0x21)
                         {
-
-                            TEMP_CK.op = scd_buffer[x];
-                            TEMP_CK.bit_array = scd_buffer[x + 1];
-                            TEMP_CK.num = scd_buffer[x + 2];
-                            TEMP_CK.val = scd_buffer[x + 3];
-
-                            CK_COUNT += 1;
-
-                            RDT_DATA[rdt_index].List_CK_OFFS.Add(x + SCD_MAIN_OFF[rdt_index]);
-
-                            // if diff chk
-                            if (TEMP_CK.bit_array == 0x00 && TEMP_CK.num == 0x19)
-                            {
-                                // normal
-                                if (TEMP_CK.val == 0x00)
-                                {
-
-                                    // calculate if len
-                                    short ifblkLen = BitConverter.ToInt16(new byte[] { scd_buffer[x - 2], scd_buffer[x - 1] }, 0);
-
-                                    // calculate else location
-                                    int else_loc = x + ifblkLen - 4;
-
-                                    while (x != else_loc)
-                                    {
-                                        x++;
-                                    }
-
-                                    if (x == else_loc && scd_buffer[else_loc] == 0x07)
-                                    {
-                                        // get else length
-                                        short els_blk_len = BitConverter.ToInt16(new byte[] { scd_buffer[else_loc + 2], scd_buffer[else_loc + 3] }, 0);
-
-                                        // skip else
-                                        x = else_loc + els_blk_len;
-                                    }
-
-
-                                }
-                                else if (TEMP_CK.val == 0x01)
-                                {
-                                    short ifblkLen = BitConverter.ToInt16(new byte[] { scd_buffer[x - 2], scd_buffer[x - 1] }, 0);
-
-                                    // calculate else location
-                                    int else_loc = x + ifblkLen - 4;
-                                    x = else_loc;
-                                }
-
-
-
-                            }
-
-
-                        }
-
-                    }
-
-                }
-
-            }
-
-        }
-
-
-        public void SCENARIO_FILTER(byte[] scd_buffer, RDT_OBJ[] RDT_DATA, int rdt_index, int[] SCD_MAIN_OFF)
-        {
-
-            LIB_RDT.CK_DATA_OBJ TEMP_CK = new LIB_RDT.CK_DATA_OBJ();
-            int CK_COUNT = 0;
-
-            for (int x = 0; x < scd_buffer.Length; x++)
-            {
-                if (x != scd_buffer.Length)
-                {
-                    // if op ck
-                    if (scd_buffer[x] == 0x21)
-                    {
-                        // if op ck confirm
-                        if (scd_buffer[x + 3] == 0x01 || scd_buffer[x + 3] == 0x00)
-                        {
-
-                            TEMP_CK.op = scd_buffer[x];
-                            TEMP_CK.bit_array = scd_buffer[x + 1];
-                            TEMP_CK.num = scd_buffer[x + 2];
-                            TEMP_CK.val = scd_buffer[x + 3];
-
-                            CK_COUNT += 1;
-
-                            RDT_DATA[rdt_index].List_CK_OFFS.Add(x + SCD_MAIN_OFF[rdt_index]);
-
-                            if (TEMP_CK.bit_array == 0x01 && TEMP_CK.num == 0x01)
+                            // if op ck confirm
+                            if (scd_buffer[x + 3] == 0x01 || scd_buffer[x + 3] == 0x00)
                             {
 
-                                // A SCENARIO
-                                if (TEMP_CK.val == 0x00)
+                                TEMP_CK.op = scd_buffer[x];
+                                TEMP_CK.bit_array = scd_buffer[x + 1];
+                                TEMP_CK.num = scd_buffer[x + 2];
+                                TEMP_CK.val = scd_buffer[x + 3];
+
+                                CK_COUNT += 1;
+
+                                RDT_DATA[rdt_index].List_CK_OFFS.Add(x + SCD_MAIN_OFF[rdt_index]);
+
+                                // if diff chk
+                                if (TEMP_CK.bit_array == 0x00 && TEMP_CK.num == 0x19)
                                 {
-
-                                    // calculate if len
-                                    short ifblkLen = BitConverter.ToInt16(new byte[] { scd_buffer[x - 2], scd_buffer[x - 1] }, 0);
-
-                                    // calculate else location
-                                    int else_loc = x + ifblkLen - 4;
-
-                                    while (x != else_loc)
+                                    // normal
+                                    if (TEMP_CK.val == 0x00)
                                     {
 
-                                        x++;
+                                        // calculate if len
+                                        short ifblkLen = BitConverter.ToInt16(new byte[] { scd_buffer[x - 2], scd_buffer[x - 1] }, 0);
+
+                                        // calculate else location
+                                        int else_loc = x + ifblkLen - 4;
+
+                                        while (x != else_loc)
+                                        {
+                                            x++;
+                                        }
+
+                                        if (x == else_loc && scd_buffer[else_loc] == 0x07)
+                                        {
+                                            // get else length
+                                            short els_blk_len = BitConverter.ToInt16(new byte[] { scd_buffer[else_loc + 2], scd_buffer[else_loc + 3] }, 0);
+
+                                            // skip else
+                                            x = else_loc + els_blk_len;
+                                        }
 
 
                                     }
-
-                                    if (x == else_loc && scd_buffer[else_loc] == 0x07)
+                                    else if (TEMP_CK.val == 0x01)
                                     {
+                                        short ifblkLen = BitConverter.ToInt16(new byte[] { scd_buffer[x - 2], scd_buffer[x - 1] }, 0);
 
-                                        // get else length
-                                        short els_blk_len = BitConverter.ToInt16(new byte[] { scd_buffer[else_loc + 2], scd_buffer[else_loc + 3] }, 0);
-
-                                        // skip else
-                                        x = else_loc + els_blk_len;
-
+                                        // calculate else location
+                                        int else_loc = x + ifblkLen - 4;
+                                        x = else_loc;
                                     }
+
 
 
                                 }
 
 
                             }
-
 
                         }
 
@@ -1731,10 +1791,87 @@ namespace bio2_rndx
             }
 
 
-        }
+            public void SCENARIO_FILTER(byte[] scd_buffer, RDT_OBJ[] RDT_DATA, int rdt_index, int[] SCD_MAIN_OFF)
+            {
 
+                LIB_RDT.CK_DATA_OBJ TEMP_CK = new LIB_RDT.CK_DATA_OBJ();
+                int CK_COUNT = 0;
+
+                for (int x = 0; x < scd_buffer.Length; x++)
+                {
+                    if (x != scd_buffer.Length)
+                    {
+                        // if op ck
+                        if (scd_buffer[x] == 0x21)
+                        {
+                            // if op ck confirm
+                            if (scd_buffer[x + 3] == 0x01 || scd_buffer[x + 3] == 0x00)
+                            {
+
+                                TEMP_CK.op = scd_buffer[x];
+                                TEMP_CK.bit_array = scd_buffer[x + 1];
+                                TEMP_CK.num = scd_buffer[x + 2];
+                                TEMP_CK.val = scd_buffer[x + 3];
+
+                                CK_COUNT += 1;
+
+                                RDT_DATA[rdt_index].List_CK_OFFS.Add(x + SCD_MAIN_OFF[rdt_index]);
+
+                                if (TEMP_CK.bit_array == 0x01 && TEMP_CK.num == 0x01)
+                                {
+
+                                    // A SCENARIO
+                                    if (TEMP_CK.val == 0x00)
+                                    {
+
+                                        // calculate if len
+                                        short ifblkLen = BitConverter.ToInt16(new byte[] { scd_buffer[x - 2], scd_buffer[x - 1] }, 0);
+
+                                        // calculate else location
+                                        int else_loc = x + ifblkLen - 4;
+
+                                        while (x != else_loc)
+                                        {
+
+                                            x++;
+
+
+                                        }
+
+                                        if (x == else_loc && scd_buffer[else_loc] == 0x07)
+                                        {
+
+                                            // get else length
+                                            short els_blk_len = BitConverter.ToInt16(new byte[] { scd_buffer[else_loc + 2], scd_buffer[else_loc + 3] }, 0);
+
+                                            // skip else
+                                            x = else_loc + els_blk_len;
+
+                                        }
+
+
+                                    }
+
+
+                                }
+
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+        }
     }
-}
+
+
+
 
 
 

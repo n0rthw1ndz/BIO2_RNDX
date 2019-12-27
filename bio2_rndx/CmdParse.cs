@@ -19,9 +19,11 @@ namespace bio2_rndx
         public static byte PromptDebug(byte dbg_flag) {
 
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("Enable Debugging?\n Y/N");
+            Console.WriteLine("Enable Debugging? Y\\N");
+
+
             ConsoleKeyInfo opt = Console.ReadKey();
-            
+           
                 if (opt.Key == ConsoleKey.Y) { Console.ForegroundColor = ConsoleColor.Green; dbg_flag = 1; Console.WriteLine("\n\nDebugging Enabled \n"); System.Threading.Thread.Sleep(300); }
                 else { Console.ForegroundColor = ConsoleColor.Red; dbg_flag = 0; Console.WriteLine("\n\nDebugging Disabled \n"); System.Threading.Thread.Sleep(300); }
              //    else {  Console.WriteLine("\nChow"); System.Threading.Thread.Sleep(500); Environment.Exit(0); }
@@ -198,7 +200,7 @@ namespace bio2_rndx
 
         public enum EM_BIT
         {
-             BRAD,
+            BRAD,
             ZOMBIE00,
             ZOMBIE01,
             ZOMBIE02,

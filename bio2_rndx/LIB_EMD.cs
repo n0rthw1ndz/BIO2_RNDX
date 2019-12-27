@@ -68,14 +68,17 @@ namespace bio2_rndx
         
           
 
-            
-          
-
-
-
 
         };
 
+        /// <summary>
+        /// store randomized emd data for log out..
+        /// </summary>
+        public struct EMD_OUT_OBJ {
+            public string fname;
+            public string roomname;
+            public string enemy_name;
+        }
         
 
 

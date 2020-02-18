@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using System.IO;
  
 
-
-
 namespace bio2_rndx
 {
     public static class CmdParse
@@ -33,7 +31,6 @@ namespace bio2_rndx
 
         }
 
-
         public static byte PromptEnemy(byte em_flag)
         {
 
@@ -45,8 +42,6 @@ namespace bio2_rndx
             else { Console.ForegroundColor = ConsoleColor.Red; em_flag = 0; Console.WriteLine("\n\nEnemy Swap Disabled \n"); System.Threading.Thread.Sleep(300); }
 
 
-
-
             //if (em_flag == 1) {
 
             //    EnemyPrompt();
@@ -54,10 +49,6 @@ namespace bio2_rndx
 
             return em_flag;
            
-
-
-
-
         }
 
 
@@ -68,7 +59,6 @@ namespace bio2_rndx
         /// <returns></returns>
         public static byte PromptPuzzle(byte pz_flag)
         {
-
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Enable Puzzle Shuffle? (Puzzles/Timer Rando) \n Y/N");
             ConsoleKeyInfo opt = Console.ReadKey();
@@ -76,8 +66,6 @@ namespace bio2_rndx
             if (opt.Key == ConsoleKey.Y) { Console.ForegroundColor = ConsoleColor.Green; pz_flag = 1; Console.WriteLine("\n\n Puzzle Shuffle Enabled \n"); System.Threading.Thread.Sleep(300); }
            else { Console.ForegroundColor = ConsoleColor.Red; pz_flag = 0; Console.WriteLine("\n\n Puzzle Shuffle Disabled \n"); System.Threading.Thread.Sleep(300); }
            
-
-
             return pz_flag;
 
         }
@@ -114,7 +102,7 @@ namespace bio2_rndx
         { 
 
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("Enable Enemy Layout Shuffle? (Tofu/A/B) \n Y/N");
+            Console.WriteLine("Enable Enemy Layout Shuffle? (Tofu/A/B ROOMS & Boss Flips) \n Y/N");
             ConsoleKeyInfo opt = Console.ReadKey();
 
             if (opt.Key == ConsoleKey.Y) { Console.ForegroundColor = ConsoleColor.Green; layout_flag = 1; Console.WriteLine("\n\n Enemy Layout Shuffle Enabled \n"); System.Threading.Thread.Sleep(300); }
@@ -133,8 +121,8 @@ namespace bio2_rndx
             Console.WriteLine("Disble Handgun from starting load out? \n Y/N");
             ConsoleKeyInfo opt = Console.ReadKey();
 
-            if (opt.Key == ConsoleKey.Y) { Console.ForegroundColor = ConsoleColor.Green; hg_flag = 1; Console.WriteLine("\n\n Handgun Disabled \n"); System.Threading.Thread.Sleep(300); }
-            else { Console.ForegroundColor = ConsoleColor.Red; hg_flag = 0; Console.WriteLine("\n\n Handgun Enabled \n"); System.Threading.Thread.Sleep(300); }
+            if (opt.Key == ConsoleKey.Y) { Console.ForegroundColor = ConsoleColor.Red; hg_flag = 1; Console.WriteLine("\n\n Handgun Disabled \n"); System.Threading.Thread.Sleep(300); }
+            else { Console.ForegroundColor = ConsoleColor.Green; hg_flag = 0; Console.WriteLine("\n\n Handgun Enabled \n"); System.Threading.Thread.Sleep(300); }
 
 
             return hg_flag;
@@ -157,7 +145,7 @@ namespace bio2_rndx
         }
 
 
-        public  static void SeedLog(List<string> output) {
+        public  static void SeedLog(List<string> output, string configPath) {
 
             using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\SeedLog.Txt")) {
 
@@ -171,8 +159,10 @@ namespace bio2_rndx
                 Console.WriteLine("\nLog Succesffuly Written to " + AppDomain.CurrentDomain.BaseDirectory + "as 'SeedLog.txt'");
 
             }
-   
 
+            Console.WriteLine("\n And Copied to  " + configPath + "\\pl0\\rdt as 'SeedLog.txt'");
+
+            File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\SeedLog.Txt", configPath + "\\pl0\\rdt\\SeedLog.Txt", true);
 
         }
 

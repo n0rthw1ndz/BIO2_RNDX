@@ -513,10 +513,14 @@ namespace bio2_rndx
 
 
 
-        public static void Integrity_Check(List<LIB_RDT.ITEM_DATA_OBJ> Return_Shuffle, byte Debug_Flag)
+        public static bool Integrity_Check(List<LIB_RDT.ITEM_DATA_OBJ> Return_Shuffle, byte Debug_Flag)
         {
 
             Random R_Swap = new Random();
+
+
+            // int[]  = new int[] { 1, 2, 3, 4, 5, 29 };
+            List<int> BlueKeyCard_WL = new List<int> { 1, 2, 3, 4, 5, 29 };
 
             int[] DiamondErrors = new int[] { 51, 52, 34, 35, 36, 61, 63, 64, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 104, 107, 108, 109, 110, 111, 112, 113, 114, 115, 120, 121, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134 };
             int[] SpadeErrors = new int[] { 38, 39, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 104, 107, 108, 109, 110, 111, 112, 113, 114, 115, 120, 121, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134 };
@@ -534,6 +538,7 @@ namespace bio2_rndx
 
             int[] WolfMedalErrors = new int[] { 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 128, 127, 129, 130, 131, 132, 133, 134, 136, 137, 138, 139, 140, 141 };
             int[] EagleMedalErrors = new int[] { 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 128, 127, 129, 130, 131, 132, 133, 134, 136, 137, 138, 139, 140, 141 };
+            int[] FilmErrors = new int[] { 10, 11, 12, 51, 52, 34, 35, 36, 61, 63, 64, 38, 39, 40, 67, 68, 59, 60, 75, 65, 66, 76, 71, 73, 74, 77, 78, 79, 80, 81, 82, 30, 47, 48, 49, 50, 33, 19, 11, 58, 13, 17, 59, 72, 74, 74 };
 
 
 
@@ -563,14 +568,19 @@ namespace bio2_rndx
             bool filmB = false;
             bool filmC = false;
             bool filmD = false;
+            bool Fuse = false;
+            bool BlueCard = false;
+            bool CpanelKey = false;
+            bool MoDisk = false;
+            bool UmbrellaCard = false;
 
             int MoDiskIDX = 0;
             int MainFuseIDX = 0;
+            int BlueKeyIDX = 0;
 
 
             // films should not be on any of these because films return these items
 
-            int[] FilmErrors = new int[] { 10, 11, 12, 51, 52, 34, 35, 36, 61, 63, 64, 38, 39, 40, 67, 68, 59, 60, 75, 65, 66, 76, 71, 73, 74, 77, 78, 79, 80, 81, 82, 30, 47, 48, 49, 50, 33, 19, 11, 58, 13, 17, 59, 72, 74, 74 };
 
 
             // check mysterious void index
@@ -704,14 +714,18 @@ namespace bio2_rndx
 
             }
 
-
+            // loop through entire shuffled list
             for (int i = 0; i < Return_Shuffle.Count; i++)
             {
 
+                // collect mo disk and main fuse idx
                 if (Return_Shuffle[i].item == 0x60) { MoDiskIDX = i; }
                 if (Return_Shuffle[i].item == 0x4C) { MainFuseIDX = i; }
+                if (Return_Shuffle[i].item == 0x35) { BlueKeyIDX = i; } // find out where the blue key is
 
 
+
+                // loop through all diamond errors/compare set bool
                 for (int x = 0; x < DiamondErrors.Length; x++)
                 {
                     if (Return_Shuffle[i].item == 0x5A && i == DiamondErrors[x])
@@ -721,10 +735,9 @@ namespace bio2_rndx
                         if (Debug_Flag == 1) { Console.WriteLine("Diamond Error"); }
 
                     }
-                    //else {
-
-                    //    Diamond = true;
-                    //}
+                    else {
+                        Diamond = true;
+                    }
                 }
 
                 for (int y = 0; y < SpadeErrors.Length; y++)
@@ -734,9 +747,9 @@ namespace bio2_rndx
                         Spade = false;
                         if (Debug_Flag == 1) { Console.WriteLine("Spade Error"); }
                     }
-                    //else {
-                    //    Spade = true;
-                    //}
+                    else {
+                        Spade = true;
+                    }
                 }
 
                 for (int j = 0; j < ClubErrors.Length; j++)
@@ -746,9 +759,9 @@ namespace bio2_rndx
                         Club = false;
                         if (Debug_Flag == 1) { Console.WriteLine("Club Error"); }
                     }
-                    //else {
-                    //    Club = true;
-                    //}
+                    else {
+                        Club = true;
+                    }
 
                 }
 
@@ -760,9 +773,9 @@ namespace bio2_rndx
                         Heart = false;
                         if (Debug_Flag == 1) { Console.WriteLine("Heart Error"); }
                     }
-                    //else {
-                    //    Heart = true;
-                    //}
+                    else {
+                        Heart = true;
+                    }
                 }
 
 
@@ -798,13 +811,16 @@ namespace bio2_rndx
 
 
                     }
-                    //else {
-                    //    filmA = true;
-                    //}
+                    else {
+                        filmA = true;
+                    }
 
 
                     if (Return_Shuffle[i].item == 0x45 && i == FilmErrors[f])
                     {
+
+                        filmB = false;
+
 
                         if (Debug_Flag == 1)
                         {
@@ -835,12 +851,11 @@ namespace bio2_rndx
                         }
 
 
-                        filmB = false;
 
                     }
-                    //else {
-                    //    filmB = true;
-                    //}
+                    else {
+                        filmB = true;
+                    }
 
                     if (Return_Shuffle[i].item == 0x46 && i == FilmErrors[f])
                     {
@@ -872,15 +887,15 @@ namespace bio2_rndx
                         filmC = false;
 
                     }
-                    //else
-                    //{
-                    //    filmC = true;
-                    //}
+                    else
+                    {
+                        filmC = true;
+                    }
 
 
                     if (Return_Shuffle[i].item == 0x50 && i == FilmErrors[f])
                     {
-                        Console.WriteLine("Film D Error");
+                        if (Debug_Flag == 1) { Console.WriteLine("Film D Error"); }
 
                         int result = NonKeyIdx.First(x => x != FilmErrors[f] && x > 0);
 
@@ -905,9 +920,9 @@ namespace bio2_rndx
                         filmD = false;
 
                     }
-                    //else {
-                    //    filmD = true;
-                    //}
+                    else {
+                        filmD = true;
+                    }
 
                 }
 
@@ -917,7 +932,8 @@ namespace bio2_rndx
                     if (Return_Shuffle[i].item == 0x32 && i == ValveErrors[v])
                     {
                         Valve = false;
-                        Console.WriteLine("Valve Error Error");
+
+                        if (Debug_Flag == 1) { Console.WriteLine("Valve Error"); }
                         // set result swap index to whatever non key idx that isnt a valve error
 
 
@@ -942,10 +958,10 @@ namespace bio2_rndx
 
 
                     }
-                    //else
-                    //{
-                    //    Valve = true;
-                    //}
+                    else
+                    {
+                        Valve = true;
+                    }
                 }
 
 
@@ -978,10 +994,10 @@ namespace bio2_rndx
 
 
                     }
-                    //else
-                    //{
-                    //    RedCard = true;
-                    //}
+                    else
+                    {
+                        RedCard = true;
+                    }
                 }
 
 
@@ -1042,10 +1058,10 @@ namespace bio2_rndx
 
 
                     }
-                    //else
+                    // else
                     //{
-                    //    RedCard = true;
-                    //}
+                    //     main = true;
+                    //   }
                 }
 
 
@@ -1079,9 +1095,9 @@ namespace bio2_rndx
 
                     }
                     //else
-                    //{
+                    // {
                     //    RedCard = true;
-                    //}
+                    // }
                 }
 
                 for (int r = 0; r < WolfMedalErrors.Length; r++)
@@ -1174,31 +1190,77 @@ namespace bio2_rndx
 
 
                     }
-                    //else
-                    //{
-                    //    RedCard = true;
-                    //}
+                    else{
+                        UmbrellaCard = true;
+                    }
                 }
 
             }
 
+            bool isInList = BlueKeyCard_WL.IndexOf(BlueKeyIDX) != -1;
+
+            if (isInList)
+            {
+                BlueCard = true;
+                if (Debug_Flag == 1) { 
+                Console.WriteLine("Blue keycard is in valid range");
+                 } 
+            }
+            else {
+
+                Console.WriteLine("Blue Keycard Error Detected");
+                int result = 0;
 
 
-            //if (Spade == true && Heart == true && Diamond == true && Club == true && Valve == true && RedCard == true && filmA == true && filmB == true && filmC == true && filmD == true)
-            //{
-            //    Console.ForegroundColor = ConsoleColor.Green;
-            //    Console.WriteLine("SEED PASSED INTEGRITY CHECk");
-            //}
-            //else {
-            //    Console.ForegroundColor = ConsoleColor.Red;
-            //    Console.WriteLine("SEED FAILED INTEGRITY CHECk");
+                for (int i = 0; i < BlueKeyCard_WL.Count; i++)
+                {
 
-            //    //  re run app?
-            //    //string[] args = new string[] {"-l", "-em_on", "-gs_on", "-pz_on" };
+                    // if there is a common item in the white listed spots
+                    if (LIB_ITEM.BIO2_COMMON_LUT_LA.ContainsKey(Return_Shuffle[BlueKeyCard_WL[i]].item))
+                    {
+                        // print index + item name
+                        Console.WriteLine(BlueKeyCard_WL[i].ToString() + "] " + LIB_ITEM.BIO2_COMMON_LUT_LA[Return_Shuffle[BlueKeyCard_WL[i]].item]);
 
-            //    //Program.Main(args);
+                        result = BlueKeyCard_WL[i];
+                        // new instance of item at above result
+                        LIB_RDT.ITEM_DATA_OBJ NewSpot = Return_Shuffle[result];
 
-            //}
+                        // new result spot is now equal card
+                         Return_Shuffle[result] = Return_Shuffle[BlueKeyIDX];
+
+                        // bad card spot is now new result item
+                         Return_Shuffle[BlueKeyIDX] = NewSpot;
+
+                        if (Debug_Flag == 1) { Console.WriteLine("BLUE CARD SWAP NOW " + result + " FROM " + BlueKeyIDX); }
+
+                        //    NonKeyIdx.Remove(result);
+                    }
+                    else
+                    {
+                        // just fucking quit the app and re roll in the odd cse where it goes to far and the whitelist is already full of keys..
+                        Environment.Exit(0);
+
+                    }
+                  
+
+                }
+
+
+            }
+
+
+            /// retrurn true if everything seems in line..
+            if (Spade == true && Heart == true && Diamond == true && Club == true 
+                && Valve == true && RedCard == true && filmA == true && filmB == true 
+                && filmC == true && filmD == true && BlueCard == true && UmbrellaCard == true)
+            {
+                return true;
+            }
+            else
+            { 
+                return false;          
+            }
+            
 
         }
 

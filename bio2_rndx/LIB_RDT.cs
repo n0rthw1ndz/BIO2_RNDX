@@ -165,6 +165,30 @@ namespace bio2_rndx
 
         }
 
+        /// <summary>
+        ///  0x8E ex battle super em set? struct could be wrong..
+        /// </summary>
+        public struct SUPER_EM_SET_OBJ
+        {
+            public byte _opdummy;
+            public byte _ubyte00;
+            public byte _emIndex;
+            public byte _emdID;
+            public byte _emPose;
+            public short _AnimFlag00;
+            public short _ushort00;
+            public byte _SND;
+            public byte _TEX;
+            public byte _emFlag;
+            public short _posx;
+            public short _posy;
+            public short _posz;
+            public short _posr;
+            public short _ushort01;
+            public short _ushort02;
+            public short ushort03;
+
+        }
 
 
         public struct ITEM_DATA_OBJ

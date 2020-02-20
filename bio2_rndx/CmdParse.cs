@@ -31,6 +31,21 @@ namespace bio2_rndx
 
         }
 
+
+
+        public static byte PromptItem(byte item_flag) {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Enable Item Randomization? \n Y/N");
+            ConsoleKeyInfo opt = Console.ReadKey();
+
+            if (opt.Key == ConsoleKey.Y) { Console.ForegroundColor = ConsoleColor.Green; item_flag = 1; Console.WriteLine("\nItem Swap Enabled \n"); System.Threading.Thread.Sleep(300); }
+            else { Console.ForegroundColor = ConsoleColor.Red; item_flag = 0; Console.WriteLine("\nItem Swap Disabled \n"); System.Threading.Thread.Sleep(300); }
+
+            return item_flag;
+
+
+        }
+
         public static byte PromptEnemy(byte em_flag)
         {
 

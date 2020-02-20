@@ -83,11 +83,12 @@ namespace bio2_rndx
                                 RDT_DATA[rdt_index].ITEM_AOTS[x] = AllItems[t_count]; // assign to shuffled index                                    
                             }
 
-                            // if weapon/ammo range
+                            // if weapon/ammo
                             if (RDT_DATA[rdt_index].ITEM_AOTS[x].item >= 0x00 && RDT_DATA[rdt_index].ITEM_AOTS[x].item <= 0x1F)
                             {
+                                // not a knife? randomize quantity between min/max capacity 
                                 if (LIB_ITEM.BIO2_LUT_QUANTITY[RDT_DATA[rdt_index].ITEM_AOTS[x].item] > 2)
-                                {
+                                { 
                                     r_quantity = r_Amount.Next(2, LIB_ITEM.BIO2_LUT_QUANTITY[RDT_DATA[rdt_index].ITEM_AOTS[x].item]);
                                 }
                                 else
@@ -2387,12 +2388,20 @@ namespace bio2_rndx
             // Console.WriteLine(rdt_index + "] " + rdt_File);
 
             // zombies
-            byte[] POSE_IDS = new byte[] { 0x01, 0x02, 0x03, 0x08, 0x09, 0x43, 0x86, 0xC3 };
+            byte[] POSE_IDS = new byte[] { 0x01, 0x02, 0x03, 0x08, 0x09, 0x43, 0x86, 0xC3 }; 
+          
+             // safer enemy sets
             byte[] Safe_Rolls = new byte[] { 2, 3, 6, 7, 8, 9, 10, 12 };
+
             byte[] SafeIsh_Rolls = new byte[] { 0, 1, 2, 3, 6, 7, 8, 9, 10, 12 }; // no mr x
 
             byte[] Zombie_Tex_Rolls = new byte[] { 0, 1, 2, 3 };
+            
+            // create a new enemy object
             LIB_RDT.EM_SET_OBJ EM_SET = new LIB_RDT.EM_SET_OBJ();
+
+
+            LIB_RDT.SUPER_EM_SET_OBJ x8E_SET = new LIB_RDT.SUPER_EM_SET_OBJ();
 
             Random Em_Roll = new Random();
 
@@ -2442,8 +2451,6 @@ namespace bio2_rndx
                         // evidence room / red hallways , dont roll mr x
                         if (rdt_index == 39) { roll = SafeIsh_Rolls[safeIsh_roll]; }
 
-
-
                         // rdt_index == 42 // red hall if u want
 
                         // lickers
@@ -2451,7 +2458,10 @@ namespace bio2_rndx
                         {
                             EM_SET._emdID = 0x22; EM_SET._emPose = 0; EM_SET._TEX = 0; EM_SET._SND = 0x0E; EM_SET._AnimFlag00 = 144;
                             EMD_OUT[rdt_index].fname = rdt_File;
-                            EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            if (LIB_ROOM.LUT_ROOM.ContainsKey(rdt_File.Substring(rdt_File.Length - 8, 4)))
+                            {
+                                EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            }
                             EMD_OUT[rdt_index].enemy_name = "LICKER";
 
                             //Console.WriteLine("RED LICKER SET IN " + rdt_File);
@@ -2462,7 +2472,10 @@ namespace bio2_rndx
                             EM_SET._emdID = 0x24; EM_SET._emPose = 0; EM_SET._TEX = 0; EM_SET._SND = 0x33; EM_SET._AnimFlag00 = 144;
 
                             EMD_OUT[rdt_index].fname = rdt_File;
-                            EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            if (LIB_ROOM.LUT_ROOM.ContainsKey(rdt_File.Substring(rdt_File.Length - 8, 4)))
+                            {
+                                EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            }
                             EMD_OUT[rdt_index].enemy_name = "SUPER LICKER";
                         }
 
@@ -2471,7 +2484,10 @@ namespace bio2_rndx
                         {
                             EM_SET._emdID = 0x25; EM_SET._emPose = 0; EM_SET._TEX = 131; EM_SET._SND = 0x10;
                             EMD_OUT[rdt_index].fname = rdt_File;
-                            EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            if (LIB_ROOM.LUT_ROOM.ContainsKey(rdt_File.Substring(rdt_File.Length - 8, 4)))
+                            {
+                                EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            }
                             EMD_OUT[rdt_index].enemy_name = "SPIDER";
                         }
                         // dogs
@@ -2479,7 +2495,10 @@ namespace bio2_rndx
                         {
                             EM_SET._emdID = 0x20; EM_SET._emPose = 1; EM_SET._TEX = 0; EM_SET._SND = 0x0C;
                             EMD_OUT[rdt_index].fname = rdt_File;
-                            EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            if (LIB_ROOM.LUT_ROOM.ContainsKey(rdt_File.Substring(rdt_File.Length - 8, 4)))
+                            {
+                                EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            }
                             EMD_OUT[rdt_index].enemy_name = "DOG";
                         }
                         // green ivys
@@ -2487,7 +2506,10 @@ namespace bio2_rndx
                         {
                             EM_SET._emdID = 0x2E; EM_SET._emPose = 1; EM_SET._SND = 0x13;
                             EMD_OUT[rdt_index].fname = rdt_File;
-                            EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            if (LIB_ROOM.LUT_ROOM.ContainsKey(rdt_File.Substring(rdt_File.Length - 8, 4)))
+                            {
+                                EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            }
                             EMD_OUT[rdt_index].enemy_name = "GREEN IVY";
                         }
                         // purple ivys
@@ -2495,7 +2517,10 @@ namespace bio2_rndx
                         {
                             EM_SET._emdID = 0x39; EM_SET._emPose = 17; EM_SET._TEX = 0; EM_SET._SND = 0x13;
                             EMD_OUT[rdt_index].fname = rdt_File;
-                            EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            if (LIB_ROOM.LUT_ROOM.ContainsKey(rdt_File.Substring(rdt_File.Length - 8, 4)))
+                            {
+                                EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            }
                             EMD_OUT[rdt_index].enemy_name = "PURPLE IVY";
                         }
 
@@ -2504,7 +2529,10 @@ namespace bio2_rndx
                         {
                             EM_SET._emdID = 0x2D; EM_SET._emPose = 0; EM_SET._TEX = 0; EM_SET._SND = 0x11;
                             EMD_OUT[rdt_index].fname = rdt_File;
-                            EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            if (LIB_ROOM.LUT_ROOM.ContainsKey(rdt_File.Substring(rdt_File.Length - 8, 4)))
+                            {
+                                EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            }
                             EMD_OUT[rdt_index].enemy_name = "JAZZ HANDS";
                         }
 
@@ -2520,7 +2548,10 @@ namespace bio2_rndx
                         {
                             EM_SET._emdID = 0x1F; EM_SET._emPose = POSE_IDS[pose_roll]; EM_SET._TEX = Zombie_Tex_Rolls[tex_roll]; EM_SET._SND = 0x02;
                             EMD_OUT[rdt_index].fname = rdt_File;
-                            EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            if (LIB_ROOM.LUT_ROOM.ContainsKey(rdt_File.Substring(rdt_File.Length - 8, 4)))
+                            {
+                                EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            }
                             EMD_OUT[rdt_index].enemy_name = "ZOMBIE";
                         }
                         // zombies
@@ -2528,7 +2559,10 @@ namespace bio2_rndx
                         {
                             EM_SET._emdID = 0x15; EM_SET._emPose = POSE_IDS[pose_roll]; EM_SET._TEX = 128; EM_SET._SND = 0x2F;
                             EMD_OUT[rdt_index].fname = rdt_File;
-                            EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            if (LIB_ROOM.LUT_ROOM.ContainsKey(rdt_File.Substring(rdt_File.Length - 8, 4)))
+                            {
+                                EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            }
                             EMD_OUT[rdt_index].enemy_name = "ZOMBIE";
                         }
                         //zombies
@@ -2536,7 +2570,10 @@ namespace bio2_rndx
                         {
                             EM_SET._emdID = 0x17; EM_SET._emPose = POSE_IDS[pose_roll]; EM_SET._TEX = 0; EM_SET._SND = 0x2E;
                             EMD_OUT[rdt_index].fname = rdt_File;
-                            EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            if (LIB_ROOM.LUT_ROOM.ContainsKey(rdt_File.Substring(rdt_File.Length - 8, 4)))
+                            {
+                                EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            }
                             EMD_OUT[rdt_index].enemy_name = "ZOMBIE";
                         }
 
@@ -2547,7 +2584,10 @@ namespace bio2_rndx
                         {
                             EM_SET._emdID = 0x3A; EM_SET._emPose = 0; EM_SET._TEX = 0; EM_SET._SND = 0x17;
                             EMD_OUT[rdt_index].fname = rdt_File;
-                            EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            if (LIB_ROOM.LUT_ROOM.ContainsKey(rdt_File.Substring(rdt_File.Length - 8, 4)))
+                            {
+                                EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            }
                             EMD_OUT[rdt_index].enemy_name = "MOTH";
                         }
 
@@ -2556,7 +2596,10 @@ namespace bio2_rndx
                         {
                             EM_SET._emdID = 0x2A; EM_SET._emPose = 67; EM_SET._TEX = 0; EM_SET._SND = 0x12;
                             EMD_OUT[rdt_index].fname = rdt_File;
-                            EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            if (LIB_ROOM.LUT_ROOM.ContainsKey(rdt_File.Substring(rdt_File.Length - 8, 4)))
+                            {
+                                EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            }
                             EMD_OUT[rdt_index].enemy_name = "MR X";
                         }
 
@@ -2570,7 +2613,10 @@ namespace bio2_rndx
                         {
                             EM_SET._emdID = 0x21; EM_SET._emPose = 64; EM_SET._TEX = 0; EM_SET._SND = 0x0D;
                             EMD_OUT[rdt_index].fname = rdt_File;
-                            EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            if (LIB_ROOM.LUT_ROOM.ContainsKey(rdt_File.Substring(rdt_File.Length - 8, 4)))
+                            {
+                                EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            }
                             EMD_OUT[rdt_index].enemy_name = "CROW";
                         }
 
@@ -2578,9 +2624,15 @@ namespace bio2_rndx
 
                         if (roll == 13)
                         {
-                            EM_SET._emdID = 0x11; EM_SET._emPose = POSE_IDS[pose_roll]; EM_SET._TEX = 0; EM_SET._SND = 0x02;
+                            EM_SET._emdID = 0x11; 
+                            EM_SET._emPose = POSE_IDS[pose_roll]; 
+                            EM_SET._TEX = 0x00; 
+                            EM_SET._SND = 0x02;
                             EMD_OUT[rdt_index].fname = rdt_File;
-                            EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            if (LIB_ROOM.LUT_ROOM.ContainsKey(rdt_File.Substring(rdt_File.Length - 8, 4)))
+                            {
+                                EMD_OUT[rdt_index].roomname = LIB_ROOM.LUT_ROOM[rdt_File.Substring(rdt_File.Length - 8, 4)];
+                            }
                             EMD_OUT[rdt_index].enemy_name = "BRAD";
                         }
 
@@ -2630,14 +2682,17 @@ namespace bio2_rndx
                             roll = (byte)Em_Roll.Next(7, 11);
                         }
 
+                        /// handle super em set
+                        if (roll == 15) {
+                            x8E_SET._emdID = 0x34;
+                            
+                        }
 
                         // skip opcode and jump to newly ID/rolled pose..
                         fs.Seek(RDT_DATA[rdt_index].LIST_EMD_OFFS[i] + 3, SeekOrigin.Begin);
                         bw.Write(EM_SET._emdID);
                         bw.Write(EM_SET._emPose);
-
-
-
+                        
 
                         // if before bus, or ada halls or lab hall
                         if (rdt_index == 25 || rdt_index == 88 || rdt_index == 107)
@@ -2847,7 +2902,8 @@ namespace bio2_rndx
              */
 
             byte[] KENDO_SWAPS = new byte[] { 0x42, 0x43, 0x44, 0x48, 0x45 };
-            byte[] MODEL_SWAPS = new byte[] { 0x43, 0x44, 0x45, 0x48 };
+            //  byte[] MODEL_SWAPS = new byte[] { 0x43, 0x44, 0x45, 0x48 };
+            byte[] MODEL_SWAPS = new byte[] { 0x3E, 0x3E, 0x3E, 0x3E };
             // 42 irons 43 ada, 48, kendo
             Random M_Swap = new Random(); // random 
 

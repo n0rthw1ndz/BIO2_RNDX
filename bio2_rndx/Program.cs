@@ -256,6 +256,7 @@ namespace bio2_rndx
                     if (args[0] == "/l" || args[0] == "/L")
                     {
                         DEBUG_MODE = CmdParse.PromptDebug(DEBUG_MODE);
+                        ITEM_MODE = CmdParse.PromptItem(ITEM_MODE);
                         ENEMY_MODE = CmdParse.PromptEnemy(ENEMY_MODE);
                         PUZZLE_MODE = CmdParse.PromptPuzzle(PUZZLE_MODE);
                         ITEMBOX_MODE = CmdParse.PromptItemBox(ITEMBOX_MODE);
@@ -264,7 +265,7 @@ namespace bio2_rndx
                         HANDGUN_MODE = CmdParse.PromptHG(HANDGUN_MODE);
 
                         // set item mode to common only
-                        ITEM_MODE = 1;
+                        
                         PL_FLAG_L = 1;
 
                         //if backup dir doesent exist
@@ -319,7 +320,7 @@ namespace bio2_rndx
                             if (Char.IsNumber(Fcheck))
                             {
                                 filter_num++;
-                                BIO2_LIB_RND.Item_Patch(rdt_files[i], i);
+                                if (ITEM_MODE == 1) { BIO2_LIB_RND.Item_Patch(rdt_files[i], i); }
                                 prg.PARSE_RDT(rdt_files[i], i); // mass parse rdt's store offsets
                                 prg.PARSE_SCD_BUFFER(rdt_files[i], i); // mass parse rdt item/data/get counts
                             }
@@ -336,8 +337,11 @@ namespace bio2_rndx
 
 
                         // shuffle read item list before re writing..
-                        prg.ITEM_SHUFFLE(args, prg.AllItems, prg.Shuffled_Items);
 
+                        if (ITEM_MODE == 1)
+                        {
+                            prg.ITEM_SHUFFLE(args, prg.AllItems, prg.Shuffled_Items);
+                        }
 
 
 
@@ -359,12 +363,10 @@ namespace bio2_rndx
                         // loop all files
                         for (int x = 0; x < rdt_files.Length; x++)
                         {
-
-
-
-
-                            BIO2_LIB_RND.Shuffle_CK(rdt_files[x], x, prg.RDT_DATA[x].Item_Aot_Count, ref t_count, prg.RDT_DATA, prg.Shuffled_Items, prg.LogOut);
-
+                            if (ITEM_MODE == 1)
+                            {
+                                BIO2_LIB_RND.Shuffle_CK(rdt_files[x], x, prg.RDT_DATA[x].Item_Aot_Count, ref t_count, prg.RDT_DATA, prg.Shuffled_Items, prg.LogOut);
+                            }
                             /// ENABLE PUZZLES
                             if (PUZZLE_MODE == 1)
                             {
@@ -659,27 +661,21 @@ namespace bio2_rndx
 
                     }
 
-
+                    // claire ...
                     if (args[0] == "/c" || args[0] == "/C")
                     {
-
-
-                        Console.WriteLine("Nice try but good things come to those that wait smart guy !! =]\n");
-
-                        Environment.Exit(0);
-
-
-                    }
-
-
-                    if (args[0] == "-c" && args[1] == "-em_on" && args[2] == "-gs_on" && args[3] == "-pz_on")
-                    {
-
-                        Console.WriteLine("CLAIRE A (ENEMY SHUFFLE ON)  (GAME TYPE SHUFFLE ON) (PUZZLE SHUFFLE ON)");
+                        DEBUG_MODE = CmdParse.PromptDebug(DEBUG_MODE);
+                        ITEM_MODE = CmdParse.PromptItem(ITEM_MODE);
+                        ENEMY_MODE = CmdParse.PromptEnemy(ENEMY_MODE);
+                        PUZZLE_MODE = CmdParse.PromptPuzzle(PUZZLE_MODE);
+                    //    ITEMBOX_MODE = CmdParse.PromptItemBox(ITEMBOX_MODE);
+                        SCENEARIO_MODE = CmdParse.PromptLayout(SCENEARIO_MODE);
+                  //      CUTSCENE_MODE = CmdParse.PromptCut(CUTSCENE_MODE);
+                //        HANDGUN_MODE = CmdParse.PromptHG(HANDGUN_MODE);
 
                         // set item mode to common only
-                        ITEM_MODE = 1;
-                        PL_FLAG_L = 1;
+
+                        PL_FLAG_C = 1;
 
                         //if backup dir doesent exist
                         if (!Directory.Exists(prg.Dir_Path + "\\bk_rdt_C"))
@@ -698,40 +694,42 @@ namespace bio2_rndx
                         t_count = 0;
                         t_em_count = 0;
 
-                        List<string> rdt_filez = new List<string>();
+
                         //resize all structures to num of rdts
                         Array.Resize(ref prg.SCD_MAIN_OFFS, rdt_files.Length);
                         Array.Resize(ref prg.SCD_SUB_OFFS, rdt_files.Length);
                         Array.Resize(ref prg.SCD_EOF, rdt_files.Length);
                         Array.Resize(ref prg.RDT_DATA, rdt_files.Length);
+                        Array.Resize(ref prg.EMD_OUT, rdt_files.Length);
 
-
+                        //     Array.Resize(ref SEED_ENTRIES, rdt_files.Length);
+                        //      Array.Resize(ref SEED_ENTRYS, 158);
 
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("TOTAL RDT's FOUND: " + rdt_files.Length + "\n");
 
+                        if (DEBUG_MODE == 1)
+                        {
+                            Console.WriteLine("TOTAL RDT's FOUND: " + rdt_files.Length + "\n");
+                        }
 
 
                         for (int i = 0; i < rdt_files.Length; i++)
                         {
 
-                            int qChk = int.Parse(rdt_files[i].Substring(rdt_files[i].Length - 5, 1));
-
-
-
-                            Console.ForegroundColor = ConsoleColor.DarkCyan;
-                            Console.WriteLine("\n[" + i.ToString() + "] " + "[" + rdt_files[i].Substring(rdt_files[i].Length - 12, 12) + "]");
-                            Console.WriteLine("-------------------------------------------------------------");
-
+                            if (DEBUG_MODE == 1)
+                            {
+                                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                Console.WriteLine("\n[" + i.ToString() + "] " + "[" + rdt_files[i].Substring(rdt_files[i].Length - 12, 12) + "]");
+                                Console.WriteLine("-------------------------------------------------------------");
+                            }
 
                             char Fcheck = char.Parse(rdt_files[i].Substring(rdt_files[i].Length - 8, 1));
-                            int claireCk = int.Parse(rdt_files[i].Substring(rdt_files[i].Length - 5, 1));
 
                             //Filtered Out Extreme Battle
                             if (Char.IsNumber(Fcheck))
                             {
                                 filter_num++;
-                                //   BIO2_LIB_RND.Item_Patch(rdt_files[i], i);
+                                if (ITEM_MODE == 1) { BIO2_LIB_RND.Item_Patch(rdt_files[i], i); }
                                 prg.PARSE_RDT(rdt_files[i], i); // mass parse rdt's store offsets
                                 prg.PARSE_SCD_BUFFER(rdt_files[i], i); // mass parse rdt item/data/get counts
                             }
@@ -748,128 +746,163 @@ namespace bio2_rndx
 
 
                         // shuffle read item list before re writing..
-                        prg.ITEM_SHUFFLE(args, prg.AllItems, prg.Shuffled_Items);
+
+                        if (ITEM_MODE == 1)
+                        {
+                            prg.ITEM_SHUFFLE(args, prg.AllItems, prg.Shuffled_Items);
+                        }
 
 
 
+                        // prompt item list control options.....
+                        LIB_RDT.Prompt_Swap(prg.Shuffled_Items);
+
+                        Console.WriteLine("\n\n");
 
 
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n[-----------------------------------------------------------------------------------------------]");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(Figgle.FiggleFonts.Speed.Render("ITEM OUTPUT"));
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("[-----------------------------------------------------------------------------------------------]");
 
-                        //  LIB_RDT.Prompt_Swap(prg.Shuffled_Items);
 
 
                         // loop all files
                         for (int x = 0; x < rdt_files.Length; x++)
                         {
-                            //Console.WriteLine(rdt_files[x]);
-
-                            BIO2_LIB_RND.Shuffle_CK_Claire(rdt_files[x], x, prg.RDT_DATA[x].Item_Aot_Count, ref t_count, prg.RDT_DATA, prg.Shuffled_Items);
-
-
-                            //   if (x == 12) { BIO2_LIB_RND.Statue_Shuffle(rdt_files[x]); }
-                            //    if (x == 41) { BIO2_LIB_RND.Safe_Shuffle(rdt_files[x], x); }
-                            //    if (x == 43) { BIO2_LIB_RND.Torch_Shuffle(rdt_files[x]); }
-                            //     if (x == 119 || x == 123 || x == 121) { BIO2_LIB_RND.Timer_Shuffle(rdt_files[x], x); }
-
-                            //  BIO2_LIB_RND.CUTSCENE_EM_SWAP(rdt_files[x], x);
-
-
-
-                            // enable em_set randomization for hunk/tofu =]
-                            //     BIO2_LIB_RND.Shuffle_GTYPE(rdt_files[x], x);
-
-                            switch (x)
+                            if (ITEM_MODE == 1)
+                            {
+                                BIO2_LIB_RND.Shuffle_CK_Claire(rdt_files[x], x, prg.RDT_DATA[x].Item_Aot_Count, ref t_count, prg.RDT_DATA, prg.Shuffled_Items);
+                            }
+                            /// ENABLE PUZZLES
+                            if (PUZZLE_MODE == 1)
                             {
 
-                                case 0:
-                                case 2:
-                                //  case 3: no brad room
-                                //   case 5:
-                                case 6:
-                                case 7:
-                                //   case 9:
-                                case 10:
-                                case 15:
-                                case 19: // blue coke hall
-                                case 20: // stars hallway
-                                case 24: // dumpster area
-                                case 25: // b4 bus
-                                case 26:
-                                case 27:
-                                case 32: // marvin
-                                case 37: // dark room hall
-                                case 39:
-                                case 40:
-                                case 45: // yellow hall
-                                case 41:
-                                case 42:
-                                case 46: // night duty
-                                case 47:
-                                case 52: // parking lot
-                                case 58: // spider sewer
-                                         // case 54: // kennel
-                                case 61:
-                                //  case 75: // sewer 00
-                                //  case 76: // sewer 01
-                                case 88: // train zombie basement00
-                                case 94: // train zombie basement 01
-                                case 102: // naked turntable
-                                case 105: // green locker
-                                case 107: // lab red power room
-                                          //    case 110: // plant chute
-                                case 112: // mo disk room
-                                case 117: // vam room
-                                case 120: // END A/B HALL ;) 
+                                if (x == 12) { BIO2_LIB_RND.Statue_Shuffle(rdt_files[x]); }
+                                if (x == 41) { BIO2_LIB_RND.Safe_Shuffle(rdt_files[x], x); }
+                                if (x == 43) { BIO2_LIB_RND.Torch_Shuffle(rdt_files[x]); }
+                                if (x == 119 || x == 123 || x == 121) { BIO2_LIB_RND.Timer_Shuffle(rdt_files[x], x); }
+                            }
+
+                            // enable cutscene mode
+                            if (CUTSCENE_MODE == 1)
+                            {
+                                BIO2_LIB_RND.CUTSCENE_EM_SWAP(rdt_files[x], x);
+                            }
+
+                            // enable em_set randomization for hunk/tofu =]
 
 
+                            if (SCENEARIO_MODE == 1)
+                            {
+                                BIO2_LIB_RND.Shuffle_GTYPE(rdt_files[x], x);
 
-                                    //      BIO2_LIB_RND.EMD_SWAP(rdt_files[x], x, prg.RDT_DATA[x].EMD_COUNT, ref t_em_count, prg.RDT_DATA);
-
-                                    break;
-
+                                ///
+                                if (x == 52)
+                                {
+                                    BIO2_LIB_RND.EMD_SWAP(rdt_files[x], x, prg.RDT_DATA[x].EMD_COUNT, ref t_em_count, prg.RDT_DATA, prg.EMD_OUT);
+                                }
 
                             }
 
-                            //   BIO2_LIB_RND.DOOR_AOT_SWAP(rdt_files[x], x); 
-
-                            switch (x)
+                            if (ENEMY_MODE == 1)
                             {
-                                //    case 0: // starting room
-                                //              case 1:  // kendo room,breaks..
-                                //    case 2: // basketball court
-                                case 3: // outside rpd (wont work tho if they grab shit..)
-                                case 5: // parking lot B
-                                        //    case 6: // cabin
-                                        //    case 7: // valve zombies area
-                                        //    case 10: // helecopter hallway
-                                        //    case 15: // 2f save room
-                                        //                   case 16: // 2f hall/ladder...
-                                        //               case 19: // blue coke hallawy (gtype)
-                                        //    case 20: // stars hallway
-                                        //    case 24: // dumpster area
-                                        //    case 25: //b4 bus, can crash because of states
-                                        //    case 26: // bus
-                                        //    case 27: // racoon city 3?? (after bus)
-                                        //    case 29: // trial room
-                                        //    case 37: // 1f stairs hall
-                                        //    case 39: // evidence locker
-                                        //    case 40: // blue hall
-                                        //    case 41: // east office
-                                        //    case 42:  // red hall
-                                        //    case 46: // night duty
-                                        //               case 51: // autopsy
-                                        //    case 53: // cell block (hunk setup only)
-                                        //    case 61: // sewer?
-                                        //    case 88: // basement cooridor 01
-                                        //    case 94: // basement cooridor 02
-                                        //    case 102: // lab white area
-                                        //    case 112: // VAM ROOM?
-                                        //    case 117: // Birkin lab
-                                        //                case 118: // mo disk hallway// lickers
+                                switch (x)
+                                {
+
+                                    case 0:
+                                    case 2:
+                                    //  case 3: no brad room
+                                    //   case 5:
+                                    case 6:
+                                    case 7:
+                                    //   case 9:
+                                    case 10:
+                                    case 15:
+                                    //  case 19: // blue coke hall (buggy as fuck)
+                                    case 20: // stars hallway
+                                    case 24: // dumpster area
+                                             //  case 25: // b4 bus
+                                    case 26:
+                                    case 27:
+                                    //   case 32: // marvin (buggy as fuck)
+                                    case 37: // dark room hall
+                                    case 39:
+                                    case 40:
+                                    case 45: // yellow hall
+                                    case 41:
+                                    case 42:
+                                    case 46: // night duty
+                                    case 47:
+                                    //case 52: // only EMD swap when tofu mode is on (ada parking lot scene)
+                                    case 58: // spider sewer
+                                             // case 54: // kennel
+                                    case 61:
+                                    //  case 75: // sewer 00
+                                    //  case 76: // sewer 01
+                                    case 88: // train zombie basement00
+                                    case 94: // train zombie basement 01
+                                    case 102: // naked turntable
+                                    case 105: // green locker
+                                    case 107: // lab red power room
+                                              //    case 110: // plant chute
+                                    case 112: // mo disk room
+                                    case 117: // vam room
+                                    case 120: // END A/B HALL ;) 
 
 
-                                    BIO2_LIB_RND.EMD_SHUFFLE(rdt_files[x], x, prg.RDT_DATA[x].EMD_COUNT, ref t_em_count, prg.RDT_DATA);
-                                    break;
+
+                                        BIO2_LIB_RND.EMD_SWAP(rdt_files[x], x, prg.RDT_DATA[x].EMD_COUNT, ref t_em_count, prg.RDT_DATA, prg.EMD_OUT);
+
+                                        break;
+
+
+                                }
+
+                                //   BIO2_LIB_RND.DOOR_AOT_SWAP(rdt_files[x], x); 
+
+                                switch (x)
+                                {
+                                    //    case 0: // starting room
+                                    //              case 1:  // kendo room,breaks..
+                                    //    case 2: // basketball court
+                                    case 3: // outside rpd (wont work tho if they grab shit..)
+                                    case 5: // parking lot B
+                                            //    case 6: // cabin
+                                            //    case 7: // valve zombies area
+                                            //    case 10: // helecopter hallway
+                                            //    case 15: // 2f save room
+                                            //                   case 16: // 2f hall/ladder...
+                                            //               case 19: // blue coke hallawy (gtype)
+                                            //    case 20: // stars hallway
+                                            //    case 24: // dumpster area
+                                            //    case 25: //b4 bus, can crash because of states
+                                            //    case 26: // bus
+                                            //    case 27: // racoon city 3?? (after bus)
+                                            //    case 29: // trial room
+                                            //    case 37: // 1f stairs hall
+                                            //    case 39: // evidence locker
+                                            //    case 40: // blue hall
+                                            //    case 41: // east office
+                                            //    case 42:  // red hall
+                                            //    case 46: // night duty
+                                            //               case 51: // autopsy
+                                            //    case 53: // cell block (hunk setup only)
+                                            //    case 61: // sewer?
+                                            //    case 88: // basement cooridor 01
+                                            //    case 94: // basement cooridor 02
+                                            //    case 102: // lab white area
+                                            //    case 112: // VAM ROOM?
+                                            //    case 117: // Birkin lab
+                                            //                case 118: // mo disk hallway// lickers
+
+
+                                        BIO2_LIB_RND.EMD_SHUFFLE(rdt_files[x], x, prg.RDT_DATA[x].EMD_COUNT, ref t_em_count, prg.RDT_DATA);
+                                        break;
+
+                                }
 
                             }
 
@@ -880,27 +913,136 @@ namespace bio2_rndx
                         }
 
 
+                        if (ITEMBOX_MODE == 1)
+                        {
+
+                            Random boxRoll = new Random();
+
+                            // shuffle box list..
+                            BIO2_LIB_RND.KFY_Shuffle(prg.ItemBoxRoomList, boxRoll);
+
+                            // generate random count
+                            int boxcount = boxRoll.Next(0, prg.ItemBoxRoomList.Count);
+
+                            Console.WriteLine("DISABLING ITEM BOXES: (" + boxcount + ")" + "\n");
+
+                            for (int i = 0; i < prg.ItemBoxRoomList.Count; i++)
+                            {
+                                if (i <= boxcount)
+                                {
+                                    BIO2_LIB_RND.ITEMBOX_DISABLE(rdt_files[i], boxcount, prg.ItemBoxRoomList, i);
+                                }
+                            }
 
 
+                        }
 
-
-
-
-
-
-
-                        //   SEED_HEADER.Item_Count = (Int16)t_count;
+                        //SEED_HEADER.Item_Count = (Int16)t_count;
 
                         // patch that ada throw between rooms shit
-                        //for (int j = 0; j < rdt_files.Length; j++)
+                        for (int j = 0; j < rdt_files.Length; j++)
+                        {
+                            if (j == 67)
+                            {
+                                BIO2_LIB_RND.ADA_THROW_PATCH(rdt_files[j], 62, 63, prg.RDT_DATA);
+                            }
+
+                        }
+
+
+                        //try
                         //{
-                        //    if (j == 67)
+
+                        //    if (HANDGUN_MODE == 1)
                         //    {
-                        //        BIO2_LIB_RND.ADA_THROW_PATCH(rdt_files[j], 62, 63, prg.RDT_DATA);
+
+                        //        using (FileStream fs = new FileStream(prg.Dir_Path + "\\bio2.exe", FileMode.Open))
+                        //        {
+                        //            using (BinaryWriter bw = new BinaryWriter(fs))
+                        //            {
+
+                        //                Int16 nullz = 0x00;
+
+                        //                fs.Seek(1311072, SeekOrigin.Begin);
+                        //                bw.Write(nullz);
+
+
+                        //            }
+                        //        }
+
+                        //    }
+
+
+                        //    else
+                        //    {
+                        //        using (FileStream fs = new FileStream(prg.Dir_Path + "\\bio2.exe", FileMode.Open))
+                        //        {
+                        //            using (BinaryWriter bw = new BinaryWriter(fs))
+                        //            {
+
+                        //                byte hg_id = 0x02;
+                        //                byte quan = 0x12;
+
+                        //                fs.Seek(1311072, SeekOrigin.Begin);
+                        //                bw.Write(hg_id);
+                        //                bw.Write(quan);
+
+
+                        //            }
+                        //        }
+
                         //    }
 
                         //}
+                        //catch (System.IO.IOException ex)
+                        //{
 
+                        //    Console.ForegroundColor = ConsoleColor.Red;
+                        //    Console.WriteLine("\nWARNING!");
+                        //    Console.WriteLine("Game Process is already running.. Close it first if you want handgun disabled on startup\n\n");
+                        //}
+
+                        if (ENEMY_MODE == 1)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\n[-----------------------------------------------------------------------------------------------]");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine(Figgle.FiggleFonts.Speed.Render("EMD OUTPUT"));
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("[-----------------------------------------------------------------------------------------------]");
+
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            /// dump enemy log output...
+                            for (int i = 0; i < prg.EMD_OUT.Length; i++)
+                            {
+                                try
+                                {
+                                    // try and filter out blank rooms
+                                    if (prg.EMD_OUT[i].roomname.Length > 0)
+                                    {
+                                        Console.WriteLine(prg.EMD_OUT[i].enemy_name + " SET IN " + prg.EMD_OUT[i].roomname);
+                                    }
+
+                                }
+
+                                catch (NullReferenceException NRE)
+                                {
+
+                                }
+
+                            }
+
+
+                        }
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine("Dump Seed Log to App Directory?? Y or N \n\n");
+
+                        ConsoleKeyInfo WriteKey = Console.ReadKey();
+                        if (WriteKey.Key == ConsoleKey.Y)
+                        {
+
+                            CmdParse.SeedLog(prg.LogOut, prg.Dir_Path);
+                        }
 
                         //  var tbl = ConsoleTableBuilder.From(table);
 
@@ -916,17 +1058,18 @@ namespace bio2_rndx
                         //  table.WriteXmlSchema(new FileStream(AppDomain.CurrentDomain.BaseDirectory + "SEED_LA(" + String.Format("{0:X}", "test".GetHashCode() + ")"), FileMode.OpenOrCreate));
 
 
-
-
-
                         prg.Banner();
 
-                        
-                       
 
-                        return;
+                        Console.WriteLine("Press Enter Key to Exit");
+
+                        Console.ReadLine();
+
+                        System.Threading.Thread.Sleep(200);
+
 
                     }
+
 
 
 
@@ -946,6 +1089,8 @@ namespace bio2_rndx
 
 
                     }
+
+
 
                     if (args[0] == "-opscan")
                     {
@@ -1022,7 +1167,7 @@ namespace bio2_rndx
 
 
 
-        // resonisble for shuffling the filtered list of item data
+        // reasonable for shuffling the filtered list of item data
         /// <summary>
         /// Shuffle List of Items
         /// </summary>
@@ -1262,14 +1407,13 @@ namespace bio2_rndx
                     Console.WriteLine("\n [" + BlueKeyList[0] + "] " + LIB_ITEM.BIO2_KEY_LUT_LA[Return_Shuffle[BlueKeyList[0]].item] + " > " + " [" + BlueKeycard_Idx + "] " + LIB_ITEM.BIO2_ITEM_LUT[Return_Shuffle[BlueKeycard_Idx].item] + "\n");
                 }
             }
-            if (args[0] == "-c")
-            {
-                //Console.WriteLine("\n [" + BlueKeyList[0] + "] " + LIB_ITEM.BIO2_KEY_LUT_CA[Return_Shuffle[BlueKeyList[0]].item] + " > " + " [" + BlueKeycard_Idx + "] " + LIB_ITEM.BIO2_ITEM_LUT[Return_Shuffle[BlueKeycard_Idx].item] + "\n");
-            }
+         
 
 
 
             // shuffle landing points
+      
+
                 BIO2_LIB_RND.KFY_Shuffle(ObjectKeyList, r_item);
                 BIO2_LIB_RND.KFY_Shuffle(SewerKeyList, r_item);
                 BIO2_LIB_RND.KFY_Shuffle(LabKeyList, r_item);
@@ -2289,16 +2433,16 @@ namespace bio2_rndx
 
                                     }
 
-                                    // skip ingram in lab
-                                    if (TEMP_CK.bit_array == 0x08 && TEMP_CK.num == 0x3E && scd_buffer[x - 4] == 0x06)
-                                    {
-                                        short ifblkLen = BitConverter.ToInt16(new byte[] { scd_buffer[x - 2], scd_buffer[x - 1] }, 0);
+                                    //// skip ingram in lab
+                                    //if (TEMP_CK.bit_array == 0x08 && TEMP_CK.num == 0x3E && scd_buffer[x - 4] == 0x06)
+                                    //{
+                                    //    short ifblkLen = BitConverter.ToInt16(new byte[] { scd_buffer[x - 2], scd_buffer[x - 1] }, 0);
 
-                                        int else_loc = x + ifblkLen - 4;
+                                    //    int else_loc = x + ifblkLen - 4;
 
-                                        x = else_loc;
+                                    //    x = else_loc;
 
-                                    }
+                                    //}
 
                                 }
 

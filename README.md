@@ -1,6 +1,6 @@
 # BIO2 RNDX
 
-A Resident Evil 2 (PC) randomizer and modding tool that shuffles items, enemies, puzzles, and scenarios to create fresh, unpredictable playthroughs. Originally developed for the 1998 classic, this tool extends the game's replayability far beyond its original scope.
+A Resident Evil 2 (PC) randomizer and modding tool that shuffles items, enemies, puzzles.
 
 ![BIO2 RNDX](https://github.com/n0rthw1ndz/BIO2_RNDX/blob/master/image.png)
 
